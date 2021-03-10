@@ -33,9 +33,9 @@ def filter_numbers(array, numbers_filter):
     и возвращает только чётные/нечётные/простые числа
     (выбор производится передачей дополнительного аргумента)
     """
-    if numbers_filter == 'odd':
+    if numbers_filter == ODD:
         return [i for i in array if i % 2 == 0]
-    elif numbers_filter == 'even':
+    elif numbers_filter == EVEN:
         return [i for i in array if i % 2 == 1]
-    elif numbers_filter == 'prime':
+    elif numbers_filter == PRIME:
         return list(filter(is_prime, array))

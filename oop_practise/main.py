@@ -118,7 +118,7 @@ class User:
         return password
 
     def add_pet(self, pet_instance):
-        if isinstance(pet_instance, Pet):
+        if isinstance(pet_instance, Pet) and pet_instance.master == self:
             self.pets.append(pet_instance)
         else:
             raise PetNotBelongToMaster

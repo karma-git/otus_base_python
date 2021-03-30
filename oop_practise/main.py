@@ -151,7 +151,7 @@ if __name__ == '__main__':
     masters, pets = [], []
 
     # Human input
-    andrew = User('Andrew', 'Horbach', '20026', '+375298670592')
+    andrew = User('Andrew', 'Horbach', '20026', '+37529809--53')
     andrew.password = andrew.set_password()
 
     masters.append(andrew)
@@ -165,7 +165,7 @@ if __name__ == '__main__':
     for _ in range(4):
         master_instance = Worker.create_master()
         master_instance.password = Worker.fake_password()
-        masters.append(Worker.create_master())
+        masters.append(master_instance)
 
     # create pets
     fake_pet = FakePets()

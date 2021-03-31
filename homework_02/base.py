@@ -31,12 +31,13 @@ CargoOverload
 Рекомендуем сдать до: 22.04.2021
 """
 from abc import ABC
+from exceptions import LowFuelError, NotEnoughFuel
 import exceptions
 
  
 class Vehicle(ABC):
 
-    def __init__(self, weight=0, fuel=100, fuel_consumption=10):
+    def __init__(self, weight=0, fuel=0, fuel_consumption=10):
         self.weight = weight
         self.started = False
         self.fuel = fuel
@@ -51,10 +52,16 @@ class Vehicle(ABC):
 
     def move(self, distance):
         consumption = distance * self.fuel_consumption
-        if self.fuel_consumption > consumption:
+        if self.fuel > consumption:
             self.fuel -= consumption
         else:
             raise exceptions.NotEnoughFuel
+
+v = Vehicle(fuel=150)
+v.start()
+print(v.fuel)
+v.move(10)
+print(v.fuel)
 
 
 

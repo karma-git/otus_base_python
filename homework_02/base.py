@@ -32,7 +32,6 @@ CargoOverload
 """
 from abc import ABC
 from exceptions import LowFuelError, NotEnoughFuel
-import exceptions
 
  
 class Vehicle(ABC):
@@ -48,20 +47,14 @@ class Vehicle(ABC):
             if self.fuel > 0:
                 self.started = True
             else:
-                raise exceptions.LowFuelError
+                raise LowFuelError
 
     def move(self, distance):
         consumption = distance * self.fuel_consumption
         if self.fuel > consumption:
             self.fuel -= consumption
         else:
-            raise exceptions.NotEnoughFuel
-
-v = Vehicle(fuel=150)
-v.start()
-print(v.fuel)
-v.move(10)
-print(v.fuel)
+            raise NotEnoughFuel
 
 
 

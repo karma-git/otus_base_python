@@ -26,6 +26,9 @@ def is_prime(n):
         d += 2
     return d ** 2 > n
 
+# def is_prime(x):
+#     return 2 in [x, 2 ** x % x]
+
 
 def filter_numbers(array, numbers_filter):
     """

@@ -181,4 +181,5 @@ cython_debug/
 #
 *venv
 probe.py
-
+snipets/*
+/snipets/

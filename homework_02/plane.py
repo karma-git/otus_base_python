@@ -1,5 +1,5 @@
-from base import Vehicle
-from exceptions import CargoOverload
+from homework_02.base import Vehicle
+from homework_02.exceptions import CargoOverload
 
 
 class Plane(Vehicle):

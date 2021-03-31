@@ -31,7 +31,7 @@ CargoOverload
 Рекомендуем сдать до: 22.04.2021
 """
 from abc import ABC
-from exceptions import LowFuelError, NotEnoughFuel
+from homework_02.exceptions import LowFuelError, NotEnoughFuel
 
  
 class Vehicle(ABC):

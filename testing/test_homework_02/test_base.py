@@ -35,6 +35,7 @@ class TestVehicle:
         assert vehicle.started is True
 
     def test_cannot_start_low_fuel(self, vehicle):
+        print(4*'\n')
         assert vehicle.started is False
         vehicle.fuel = 0
         with pytest.raises(exceptions.LowFuelError):

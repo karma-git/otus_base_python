@@ -143,8 +143,8 @@ class DataBaseWorker:
         conn.commit()
         conn.close()
 
-    def random_products(self) -> tuple:
-        products_count = randint(1, 6)
+    def random_products(self, product_len: int) -> tuple:
+        products_count = randint(1, product_len + 1)
         rand_prod = lambda: sample([product_id for product_id in range(1, products_count + 1)], products_count)
         return rand_prod(), products_count
 
@@ -167,7 +167,7 @@ class DataBaseWorker:
         for cust in range(1, customers_count + 1):
             products: list
             products_count: int
-            products, products_qty = self.random_products()
+            products, products_qty = self.random_products(products_count)
 
             statement = products_qty * sql_statement
             formatter = self.statement_formatter(cust, products, products_qty)

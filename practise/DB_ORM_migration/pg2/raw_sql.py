@@ -93,23 +93,15 @@ class DataBaseWorker:
                 """
                 INSERT INTO product (name, description, price)
                 VALUES (%s, %s, %s);
+                
+                INSERT INTO product_photo (url)
+                VALUES (%s);
                 """, (
                     product['name'],
                     product['description'],
-                    product['price']
-                )
-            )
-
-        conn.commit()
-
-        for product in products:
-            cur.execute(
-                """
-                INSERT INTO product_photo (url)
-                VALUES (%s);
-                """, [
+                    product['price'],
                     product['photo_url']
-                ]
+                )
             )
 
         conn.commit()
@@ -151,31 +143,36 @@ class DataBaseWorker:
         conn.commit()
         conn.close()
 
+    def random_products(self) -> tuple:
+        products_count = randint(1, 6)
+        rand_prod = lambda: sample([product_id for product_id in range(1, products_count + 1)], products_count)
+        return rand_prod(), products_count
+
+    def statement_formatter(self, cust_id: int, products: list, products_qty: int) -> tuple:
+        result = ()
+        for prod in products:
+            result = (*result, cust_id, prod)
+
+        return result
+
     def create_cart_product_relation(self):
         "Let's create 3 products in each customers cart"
         products_count = self.calculate_products_count()
         customers_count = self.calculate_customers_count()
-        rand_prod = lambda: sample([product_id for product_id in range(1, products_count + 1)], 3)
+        sql_statement = "INSERT INTO cart_product (cart_id, product_id) VALUES (%s, %s);"
 
         conn = psycopg2.connect(**CONNECTION_VAGRANT_DB_SHOP)
         cur = conn.cursor()
 
         for cust in range(1, customers_count + 1):
-            cust_products = rand_prod()
-            cur.execute("""
-                INSERT INTO cart_product (cart_id, product_id)
-                VALUES (%s, %s);
-                
-                INSERT INTO cart_product (cart_id, product_id)
-                VALUES (%s, %s);
-                
-                INSERT INTO cart_product (cart_id, product_id)
-                VALUES (%s, %s);
-                """,
-                        (cust, cust_products[0],
-                cust, cust_products[1],
-                cust, cust_products[2])
-                )
+            products: list
+            products_count: int
+            products, products_qty = self.random_products()
+
+            statement = products_qty * sql_statement
+            formatter = self.statement_formatter(cust, products, products_qty)
+
+            cur.execute(statement, formatter)
 
         conn.commit()
         conn.close()

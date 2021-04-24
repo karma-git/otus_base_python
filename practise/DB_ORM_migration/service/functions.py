@@ -1,5 +1,6 @@
 from faker import Faker
-from static import PRODUCTS
+from practise.DB_ORM_migration.service.static import PRODUCTS
+#from practise.DB_ORM_migration import PRODUCTS
 from random import choice
 
 fake = Faker()

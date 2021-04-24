@@ -4,3 +4,4 @@ from practise.DB_ORM_migration.service.functions import (
     fake_product,
     generate_products
 )
+#from practise.DB_ORM_migration.service.static import PRODUCTS

@@ -14,13 +14,14 @@
 Проект БД магазина, [вдохновлено](https://www.youtube.com/watch?v=WpojDncIWOw):   
 
 # Installation options:
-- Docker Copmpose
+- Docker Compose
 - soon: Vagrant + Ansible 
 
 ## Docker Compose
 Fastest and easiest option:
-### Clone repo
-`git clone` # and enter the root folder
+### Prepare project
+- Clone repo
+- Create virtual environment and install requirements
 ### Create env files
 `touch hpostgres.env; dev.env;`
 *postgres.env*
@@ -37,10 +38,15 @@ database=dbname
 user=secretuser
 password=secretpw
 ```
+### PATH
+Change syspath for project root folder inside alembic.ini
+
 ### Install EnvFile plugin into PyCharm
 Go to Preferences(osX) -> Plugins -> install EnvFile and follow the [manual](https://plugins.jetbrains.com/plugin/7861-envfile) to load dev.env
 ### Run docker
 `$ docker compose up -d`
+### Make migration
+inside orm folder `$ alembic update head`
 # Launch
 Now you can run the main.py script (orm) via pycharm run
 _____

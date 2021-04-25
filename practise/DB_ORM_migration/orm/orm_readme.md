@@ -168,5 +168,7 @@ upgrade head / hash - выкатывает миграцию (изменяет с
 
 Еще нужно за всем следить, чтобы не напортачить со связями :)
 ## add data to database via ORM
-hi world form sql
+easy
 ## queries
+group_by?
+## environ hints, in configs

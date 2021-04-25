@@ -14,15 +14,6 @@ def fake_customer():
             'email': person['mail']}
 
 
-def fake_customer_2(id: int):
-    fake: Faker = Faker(['ru_RU'])
-    person = fake.simple_profile()
-    return {'id': id,
-            'name': person['name'],
-            'phone': fake.phone_number(),
-            'email': person['mail']}
-
-
 def fake_product() -> tuple:
     rand_product = choice(PRODUCTS)
 

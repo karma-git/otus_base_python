@@ -9,6 +9,7 @@ from practise.DB_ORM_migration.orm.db_shop.models import Base
 # from practise.DB_ORM_migration.orm.db_shop.models.cart_product import cart_product_table
 from practise.DB_ORM_migration.orm.db_shop.models.cart_product import CartProduct
 
+
 class Cart(Base):
     __tablename__ = "cart"
 

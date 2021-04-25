@@ -17,15 +17,6 @@ class ProductPhoto(Base):
 
     product_id = Column(Integer, ForeignKey("product.id"), nullable=False)
 
-    #product = relationship("Product", back_populates="product_photo")
-    product = Column(Integer, ForeignKey("product.id"), nullable=False)
-
-    # tags = relationship(
-    #     "Tag",
-    #     secondary=posts_tags_table,
-    #     back_populates="posts"
-    # )
-
     def __str__(self):
         return f"{self.__class__.__name__}(id={self.id}, product.id={self.product_id})\n" \
                f"Product Photo Link => {self.url}"

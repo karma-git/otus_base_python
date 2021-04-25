@@ -1,10 +1,13 @@
-from sqlalchemy import Column, Integer, ForeignKey
+from sqlalchemy import Column, Integer, ForeignKey, PrimaryKeyConstraint
 
 from practise.DB_ORM_migration.orm.db_shop.models import Base
 
 
 class CartProduct(Base):
     __tablename__ = "cart_product"
+    __table_args__ = (
+        PrimaryKeyConstraint('cart_id', 'product_id'),
+    )
 
     cart_id = Column(Integer, ForeignKey("cart.id"))
     product_id = Column(Integer, ForeignKey("product.id"))

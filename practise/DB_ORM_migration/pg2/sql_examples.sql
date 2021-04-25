@@ -82,6 +82,30 @@ SELECT c.name,p.name,p.price,pp.url from customer c
     limit 7
     offset 2;
 
+-- Alch
+
+SELECT
+       anon_1.cart_id AS anon_1_cart_id,
+       anon_1.cart_customer_id AS anon_1_cart_customer_id,
+       anon_1.customer_name AS anon_1_customer_name,
+       anon_1.total AS anon_1_total,
+       product_1.id AS product_1_id,
+       product_1.name AS product_1_name,
+       product_1.description AS product_1_description,
+       product_1.price AS product_1_price
+FROM (
+    SELECT
+           cart.id AS cart_id,
+           cart.customer_id AS cart_customer_id,
+           customer.name AS customer_name,
+           sum(product.price) AS total
+FROM cart, customer, product GROUP BY product.name) AS anon_1
+    LEFT OUTER JOIN
+    (cart_product AS cart_product_1
+        JOIN product AS product_1 ON product_1.id = cart_product_1.product_id)
+        ON anon_1.cart_id = cart_product_1.cart_id]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+
 
 
 

@@ -16,3 +16,7 @@
 ## PG DUMP
 - с сервера: `postgres@ubuntu-hirsute:/tmp$ pg_dump shop > shop.bac`
 - с локальной машины: `$ pg_dump -h 192.168.1.6 shop -U postgres > shop.bac`
+## Truncate
+Чтобы почистить криво-заполненую табличку, можно сделать truncate и смыть id-шники. (вместо того чтобы лезть в pg и дропать базу).
+
+`DataBase tools -> Truncate`

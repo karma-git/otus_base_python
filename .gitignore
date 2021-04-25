@@ -188,3 +188,6 @@ snipets/*
 
 # PRACTISE
 practise/DB_ORM_migration/service/config.py
+
+# ORM
+practise/DB_ORM_migration/orm/alembic.ini

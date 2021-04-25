@@ -12,3 +12,7 @@
 # Описание:
 
 Проект БД магазина, [вдохновлено](https://www.youtube.com/watch?v=WpojDncIWOw):   
+
+## PG DUMP
+- с сервера: `postgres@ubuntu-hirsute:/tmp$ pg_dump shop > shop.bac`
+- с локальной машины: `$ pg_dump -h 192.168.1.6 shop -U postgres > shop.bac`

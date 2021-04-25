@@ -121,7 +121,7 @@ def select_group():
 
 
 def main():
-    #deploy_db(6)
+    deploy_db(6)
     select_group()
 
 

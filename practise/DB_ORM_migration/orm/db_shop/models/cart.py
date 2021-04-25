@@ -6,7 +6,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship
 
 from practise.DB_ORM_migration.orm.db_shop.models import Base
-from practise.DB_ORM_migration.orm.db_shop.models.cart_product import CartProduct
+from practise.DB_ORM_migration.orm.db_shop.models.cart_product import cart_product_table
 
 
 class Cart(Base):
@@ -17,8 +17,8 @@ class Cart(Base):
 
     products = relationship(
         "Product",
-        secondary="cart_product",
-        back_populates="cart"
+        secondary=cart_product_table,
+        back_populates="carts"
     )
 
     def __str__(self):

@@ -152,4 +152,19 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade  -> bb7e42472e18, init migration
 (otus_venv)
 ```
+# Models, many-to-many:
+- Апгрейд миграции с помощью alembic изменяет схему БД, без всяких Base.metadata.create_all().
 
+revision - подготавливает файл миграции (конструирует sql запрос на основании измениний моделей),
+  
+upgrade head / hash - выкатывает миграцию (изменяет схему БД)
+- Файлы миграций можно тупо удалять, но наверно нужно будет отодвинуть голову алембика (даунгрейд).
+
+- Многие ко многим:
+
+Есть нюанс с импортом и моделью для alembic. Не нужно импортировать модель в package models, модель нужно напрямую проимпортировать к тем моделям, которые создают связть многие ко многим.
+
+Так же, если мы используем модель в виде class, а не переменной table =; то в зависимых моделях в secondary= - мы указываем не класс модели, а имя таблицы (str) -> "cart_product"
+## add data to database via ORM
+hi world form sql
+## queries

@@ -238,13 +238,150 @@ class DataBaseWorker:
         conn.commit()
         conn.close()
 
+    def queries_1(self):
+        conn = psycopg2.connect(**CONNECTION_VAGRANT_DB_SHOP)
+        cur = conn.cursor()
+        cur.execute("""
+        SELECT pp.*,p.name,p.price FROM product_photo pp
+        LEFT JOIN product p
+        ON p.id=pp.product_id;
+        """)
+        goods = cur.fetchall()
+        for good in goods:
+            print(f"Good(name={good[3]}, price=f{good[4]}\nLink => {good[1]}", end=2*'\n')
+
+        conn.close()
+
+    def queries_2(self):
+        """--2) Выведем все покупки девушек, цена по убыванию"""
+        conn = psycopg2.connect(**CONNECTION_VAGRANT_DB_SHOP)
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT c.name,p.price,p.name,pp.url from customer c
+                LEFT JOIN cart
+                ON cart.customer_id=c.id
+            
+                LEFT JOIN cart_product cp
+                ON cp.cart_id=cart.id
+            
+                LEFT JOIN product p
+                ON p.id=cp.product_id
+            
+                LEFT JOIN product_photo pp
+                ON pp.product_id=p.id
+            
+                WHERE (
+                    c.name iLIKE '%свет%'
+                        OR
+                    c.name iLIKE '%марг%')
+                ORDER BY p.price DESC;
+        """)
+        res = cur.fetchall()
+        for girl_order in res:
+            print(f"Girl (name={girl_order[0].split()[0]}, "
+                  f"good={girl_order[2]}, price={girl_order[1]})\n"
+                  f"Photo Link => {girl_order[3]}", end=3*'\n')
+
+        conn.close()
+
+    def queries_3(self):
+        "--3) Вывести сумму корзины по всем покупателям"
+        conn = psycopg2.connect(**CONNECTION_VAGRANT_DB_SHOP)
+        cur = conn.cursor()
+        cur.execute("""
+        SELECT c.name,
+           SUM(p.price)
+           from customer c
+    
+        LEFT JOIN cart
+        ON cart.customer_id=c.id
+    
+        LEFT JOIN cart_product cp
+        ON cp.cart_id=cart.id
+    
+        LEFT JOIN product p
+        ON p.id=cp.product_id
+    
+        GROUP BY c.name
+    
+        ORDER BY sum DESC;
+        """)
+        res = cur.fetchall()
+        print(res)
+        for cust in res:
+            name, total_amount = cust
+            print(f"Customer(name={name}, total_amount={total_amount})")
+
+        conn.close()
+
+    def queries_4(self):
+        "--4) Вывести покупателей и сумму  корзины, если она больше 180к"
+        conn = psycopg2.connect(**CONNECTION_VAGRANT_DB_SHOP)
+        cur = conn.cursor()
+        cur.execute("""
+        SELECT c.name,
+           SUM(p.price)
+           from customer c
+
+        LEFT JOIN cart
+        ON cart.customer_id=c.id
+
+        LEFT JOIN cart_product cp
+        ON cp.cart_id=cart.id
+
+        LEFT JOIN product p
+        ON p.id=cp.product_id
+
+        GROUP BY c.name
+
+        HAVING sum(p.price)>180000;
+        """)
+        res = cur.fetchall()
+        print(res)
+        for cust in res:
+            name, total_amount = cust
+            print(f"Customer(name={name}, total_amount={total_amount})")
+
+        conn.close()
+
+    def queries_5(self):
+        """--5) Limit + offset"""
+        conn = psycopg2.connect(**CONNECTION_VAGRANT_DB_SHOP)
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT c.name,p.name,p.price,pp.url from customer c
+                left join cart
+                on cart.customer_id=c.id
+            
+                left join cart_product cp
+                on cp.cart_id=cart.id
+            
+                left join product p
+                on p.id=cp.product_id
+            
+                left join product_photo pp
+                on pp.product_id=p.id
+                limit 7
+                offset 2;
+        """)
+        res = cur.fetchall()
+        for buyer in res:
+            print(f"buyer (name={buyer[0]}, "
+                  f"good={buyer[2]}, price={buyer[1]})\n"
+                  f"Photo Link => {buyer[3]}", end=3 * '\n')
+
+        conn.close()
+
+
+
+
 
 def main():
     worker = DataBaseWorker()
-    worker.deploy_tables()
+    #worker.deploy_tables()
 
     # QUERIES
-    worker.fetch_customers()
+    worker.queries_5()
 
 
 if __name__ == '__main__':

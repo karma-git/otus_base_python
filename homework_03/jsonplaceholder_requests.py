@@ -5,24 +5,9 @@
 """
 import asyncio
 from aiohttp import ClientSession
-from dataclasses import dataclass
-from loguru import logger
 
 USERS_DATA_URL = "https://jsonplaceholder.typicode.com/users"
 POSTS_DATA_URL = "https://jsonplaceholder.typicode.com/posts"
-
-
-@dataclass
-class User:
-    name: str
-    username: str
-    email: str
-
-
-@dataclass
-class Post:
-    title: str
-    body: str
 
 
 async def get_json(url: str) -> dict:
@@ -38,13 +23,3 @@ async def receive_api_data() -> tuple:
     )
 
     return tuple(result)
-
-
-# TODO: import that to other module, delete debug
-def main():
-    result = asyncio.run(receive_api_data())
-    print(result)
-
-
-if __name__ == "__main__":
-    main()

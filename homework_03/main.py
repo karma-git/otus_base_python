@@ -57,14 +57,14 @@ async def fetch_users_with_posts():
     async with Session() as session:
         session: AsyncSession
 
-        statement = select(User).options(selectinload(User.post))
+        statement = select(User).options(selectinload(User.posts))
 
         result = await session.execute(statement)
         print(f"users: {result}")  # users: <sqlalchemy.engine.result.ChunkedIteratorResult object at 0x106cb91f0>
 
         for user in result.scalars():
             print(user)
-            print(user.post)
+            print(user.posts)
 
 
 async def async_main():

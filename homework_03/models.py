@@ -9,7 +9,6 @@
 """
 
 import os
-import asyncio
 from sqlalchemy import (
     Column,
     Integer,
@@ -36,9 +35,7 @@ class User(Base):
     username = Column(String, nullable=False, unique=True)
     email = Column(String, nullable=False, unique=True)
 
-    post = relationship("Post", back_populates="user")
-
-    __mapper_args__ = {"eager_defaults": True}
+    posts = relationship("Post", back_populates="user")
 
     def __str__(self):
         return f"{self.__class__.__name__}(id={self.id}, name={self.name}, " \
@@ -55,7 +52,7 @@ class Post(Base):
     body = Column(Text)
     user_id = Column(Integer, ForeignKey('users.id'))
 
-    user = relationship("User", back_populates="post")
+    user = relationship("User", back_populates="posts")
 
     def __str__(self):
         return f"{self.__class__.__name__}(id={self.id}, title={self.title}, " \
@@ -64,20 +61,6 @@ class Post(Base):
     def __repr__(self):
         return str(self)
 
-
-# async def create_tables():
-#     async with engine.begin() as conn:
-#         await conn.run_sync(Base.metadata.drop_all)
-#         await conn.run_sync(Base.metadata.create_all)
-#
-#
-# async def main():
-#     print("Starting main")
-#     await create_tables()
-#
-#
-# if __name__ == '__main__':
-#     asyncio.run(main())
 
 
 

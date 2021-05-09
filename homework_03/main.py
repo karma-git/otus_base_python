@@ -14,7 +14,7 @@
 """
 import asyncio
 
-from sqlalchemy import select
+from sqlalchemy import select, func, join
 from sqlalchemy.orm import selectinload
 
 from homework_03.models import engine, Base, Session, User, Post
@@ -67,6 +67,24 @@ async def fetch_users_with_posts():
             print(user.posts)
 
 
+async def fetch_users_posts_count():
+    async with Session() as session:
+        session: AsyncSession
+
+        # calculate posts which assigned to user
+        # select u.username, count(p.user_id) from users u left join posts p on p.user_id=u.id group by u.username;
+        user_posts_count = func.count(Post.user_id).label("total_posts")
+        j = join(User, Post, User.id == Post.user_id)
+        stmt = select(User.username, User.email, user_posts_count) \
+            .select_from(j) \
+            .group_by(User.username, User.email) \
+            .order_by(User.username)
+
+        result = await session.execute(stmt)
+        for user in result:
+            print(user)
+
+
 async def async_main():
     await create_tables()
     raw_users, raw_posts = await receive_api_data()
@@ -74,7 +92,12 @@ async def async_main():
     posts = [json_to_post_model(post) for post in raw_posts]
     await add_to_db(users)
     await add_to_db(posts)
-    await fetch_users_with_posts()
+
+    # queries
+    await asyncio.gather(
+        fetch_users_with_posts(),
+        fetch_users_posts_count()
+    )
 
 
 def main():

@@ -3,7 +3,7 @@
 # $ docker build --tag ah:v0.01 .
 # NOTE! make sure that you dont forget dot symbol at the end of line, it means that docker going to find dockerfile in current dirctory
 # 2). Run the container via following command:
-# $ docker run -d ah:v0.01 -p 1234:8080
+# $ docker run -d -p 1234:8080 ah:v0.11
 # go to your webbroweser and put http://127.0.0.1:1234 into seartch bar
 FROM python:3.8-slim-buster
 

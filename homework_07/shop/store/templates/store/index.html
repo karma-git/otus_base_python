@@ -6,9 +6,8 @@
  </head>
  <body>
   <b>Hi customers!</b>
-  {# if  <QuerySet []> is None #}
   {% if not customers.exists %}
-    <b>Unfortunately, we don't have buyers yet.</b>
+    <p><b>Unfortunately, we don't have buyers yet.</b>
   {% else %}
     {% for customer in customers %}
       <li>{{ customer }}</li>
@@ -16,3 +15,8 @@
   {% endif %}
  </body>
 </html>
+
+{% comment %}
+Checking empty query set:
+https://stackoverflow.com/questions/1387727/checking-for-empty-queryset-in-django 
+{% endcomment %}

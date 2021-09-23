@@ -6,8 +6,13 @@
  </head>
  <body>
   <b>Hi customers!</b>
-  {% for customer in customers %}
-    <li>{{ customer }}</li>
-  {% endfor %}
+  {# if  <QuerySet []> is None #}
+  {% if not customers.exists %}
+    <b>Unfortunately, we don't have buyers yet.</b>
+  {% else %}
+    {% for customer in customers %}
+      <li>{{ customer }}</li>
+    {% endfor %}
+  {% endif %}
  </body>
 </html>

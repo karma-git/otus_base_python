@@ -11,3 +11,11 @@
 - создано и установлено приложение
 - созданы модели
 - созданы миграции
+---
+### [health_check](https://github.com/KristianOellegaard/django-health-check)
+Third-party application для проверки работоспособности django приложения.
+
+Отправляем `GET` запрос по эндпоинту определенному в URL dispatcher-е и ожидаем получить код ответа **200**, иначе считаем что приложение недоступно.
+```bash
+$ curl -v -X GET http://127.0.0.1:8000/health_check/
+```

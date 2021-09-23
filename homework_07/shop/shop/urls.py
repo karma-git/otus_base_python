@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url, include
 import store.views as store
 
 urlpatterns = [
     path('', store.index_view),
     path('admin/', admin.site.urls),
+    # 3rd party
+    url(r'^health_check/', include('health_check.urls')),
 ]

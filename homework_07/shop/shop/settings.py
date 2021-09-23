@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # OWN APPS
     'store',
+    # 3rd party
+    'health_check', # https://github.com/KristianOellegaard/django-health-check
 ]
 
 MIDDLEWARE = [

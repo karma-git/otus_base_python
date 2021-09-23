@@ -10,7 +10,6 @@ COPY ./requirements.txt ./requirements.txt
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-
 RUN addgroup --gid 1000 app \
   && adduser \
     --uid 1000 \

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+<ul>
+    {% for tag in tags %}
+      <li>{{ tag.name }}</li>
+      <ul>
+          {% for article in tag.articles.all %}
+            <li>{{ article.title }}</li>
+          {% endfor %}
+      </ul>
+    {% endfor %}
+</ul>
+</body>
+</html>

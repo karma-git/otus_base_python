@@ -1,7 +1,7 @@
 # Схема
 Создаем модели для следующей схемы:
 
-img ...
+![schema](/practise/django/2.django-query-debugtoolbar/docs/db_schema.jpeg)
 
 ## Запросы
 Заходим в django shell и импортируем модели:
@@ -216,6 +216,7 @@ if DEBUG:
 ```
 ### SQL django-toolbar
 Помогает оптимизировать SQL запросы:
+
 **view.py**
 ```python
 def root(request):
@@ -231,13 +232,17 @@ def root(request):
 </body>
 ```
 Результат: 
--> img
+
+![schema](/practise/django/2.django-query-debugtoolbar/docs/bad_query.png)
+
 ---
 Правильно:
+
 **view.py**
 ```python
 def root(request):
     authors = Author.objects.all()
     return render(request, 'blog/index.html', {'authors': authors})
 ```
---> img
+
+![schema](/practise/django/2.django-query-debugtoolbar/docs/good_query.png)

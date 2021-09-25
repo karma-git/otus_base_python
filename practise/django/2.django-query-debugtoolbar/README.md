@@ -161,8 +161,10 @@ class Articles(models.Model):
 >>> linux_posts
 <QuerySet [<Articles: Title=ubuntu 18.04,author=Name=Daveth Tóni,email=daveth@gmail.com>, <Articles: Title=Django (web framework),author=Name=Mason Cole,email=mason@gmail.com>]>
 ```
-Как добавить? 26:00
-### Join == select_related
+```sql
+'SELECT "blog_articles"."id", "blog_articles"."title", "blog_articles"."text", "blog_articles"."author_id" FROM "blog_articles" INNER JOIN "blog_tags_articles" ON ("blog_articles"."id" = "blog_tags_articles"."articles_id") INNER JOIN "blog_tags" ON ("blog_tags_articles"."tags_id" = "blog_tags"."id") WHERE "blog_tags"."name" = linux'
+```
+---
 ```bash
 >>> posts_author = Articles.objects.select_related('author').filter(author__name__contains='Mason').all()
 >>> posts_author
@@ -172,6 +174,7 @@ class Articles(models.Model):
 >>> str(posts_author.query)
 'SELECT "blog_articles"."id", "blog_articles"."title", "blog_articles"."text", "blog_articles"."author_id", "blog_author"."id", "blog_author"."name", "blog_author"."email" FROM "blog_articles" INNER JOIN "blog_author" ON ("blog_articles"."author_id" = "blog_author"."id") WHERE "blog_author"."name" LIKE %Mason% ESCAPE \'\\\''
 ```
+Как добавить? 26:00
 ### prefetch_related - M2M - python
 Кэшируется на уровня пайтона
 ## DEBUG tool bar
@@ -211,3 +214,30 @@ if DEBUG:
 
     urlpatterns.append(path('__debug__/', include(debug_toolbar.urls)),)
 ```
+### SQL django-toolbar
+Помогает оптимизировать SQL запросы:
+**view.py**
+```python
+def root(request):
+    authors = Author.objects.only('name').all()
+    return render(request, 'blog/index.html', {'authors': authors})
+```
+**index.html**
+```html
+<body>
+{% for author in authors %}
+  <p> Name -> {{ author.name }}, email -> {{ author.email }}</p>
+{% endfor %}
+</body>
+```
+Результат: 
+-> img
+---
+Правильно:
+**view.py**
+```python
+def root(request):
+    authors = Author.objects.all()
+    return render(request, 'blog/index.html', {'authors': authors})
+```
+--> img

@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 class Author(models.Model):
     name = models.CharField(max_length=64)
+    # FIXME use .EmailField()
     email = models.CharField(max_length=64)
 
     def __str__(self):

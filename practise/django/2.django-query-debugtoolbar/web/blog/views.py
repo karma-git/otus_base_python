@@ -3,5 +3,5 @@ from blog.models import Author
 
 # Create your views here.
 def root(request):
-    authors = Author.objects.all()
+    authors = Author.objects.only('name').all()
     return render(request, 'blog/index.html', {'authors': authors})

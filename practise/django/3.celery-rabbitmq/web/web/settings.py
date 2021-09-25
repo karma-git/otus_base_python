@@ -128,6 +128,13 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 # Celery Configuration Options
-CELERY_TIMEZONE = "Australia/Tasmania"
-CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
+# CELERY_TIMEZONE = "Australia/Tasmania"
+# CELERY_TASK_TRACK_STARTED = True
+# CELERY_TASK_TIME_LIMIT = 30 * 60
+
+CELERY_BROKER_URL = 'amqp://localhost'
+
+# FIXME - we won't configure mail at this step
+# https://docs.djangoproject.com/en/3.2/topics/email/#file-backend
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = '/tmp/app-messages' # change this to a proper location

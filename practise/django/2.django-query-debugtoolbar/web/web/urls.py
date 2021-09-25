@@ -20,6 +20,7 @@ from web.settings import DEBUG
 
 urlpatterns = [
     path('', blog.root),
+    path('tags/', blog.check_tags),
     path('admin/', admin.site.urls),
 ]
 

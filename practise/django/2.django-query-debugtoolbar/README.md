@@ -246,3 +246,35 @@ def root(request):
 ```
 
 ![schema](/practise/django/2.django-query-debugtoolbar/docs/good_query.png)
+### prefetch_related
+#### Плохо
+**views.py**
+```python
+def check_tags(request):
+    tags = Tags.objects.all()
+    return render(request, 'blog/tags.html', {'tags': tags})
+```
+**template**
+```html
+<body>
+<ul>
+    {% for tag in tags %}
+      <li>{{ tag.name }}</li>
+      <ul>
+          {% for article in tag.articles.all %}
+            <li>{{ article.title }}</li>
+          {% endfor %}
+      </ul>
+    {% endfor %}
+</ul>
+</body>
+```
+![bad](/practise/django/2.django-query-debugtoolbar/docs/prefetch_related_bad_query.png)
+#### Хорошо
+**views.py**
+```python
+def check_tags(request):
+    tags = Tags.objects.prefetch_related('articles').all()
+    return render(request, 'blog/tags.html', {'tags': tags})
+```
+![good](/practise/django/2.django-query-debugtoolbar/docs/prefetch_related_good_query.png)

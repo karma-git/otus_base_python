@@ -50,3 +50,10 @@ from celery import current_app
         task_id = task.id
 ...
 ```
+# explain file backend
+**settings.py**
+```python
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = '/tmp/app-messages' # change this to a proper location
+```
+Используется абсолютный путь.

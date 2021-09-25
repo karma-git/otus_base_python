@@ -5,6 +5,8 @@
     <title>Hello</title>
 </head>
 <body>
-<b>{{ ctx }}</b>
+{% for author in authors %}
+  <p>{{ author }}</p>
+{% endfor %}
 </body>
 </html>

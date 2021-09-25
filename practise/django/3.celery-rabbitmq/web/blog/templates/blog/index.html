@@ -5,8 +5,24 @@
     <title>Hello</title>
 </head>
 <body>
-{% for author in authors %}
-  <p> Name -> {{ author.name }}, email -> {{ author.email }}</p>
-{% endfor %}
+   {# iterate trough authors #}
+  <div class="authors">
+  {% for author in authors %}
+    <p> Name -> {{ author.name }}, email -> {{ author.email }}</p>
+  {% endfor %}
+  </div>
+  <div class="celery">
+    {% if task_id %}
+    <a href="/task/status/?task_id={{ task_id }}">
+      check task: id -> <b>{{ task_id }}</b>
+    </a>
+    {% endif %}
+    <form method="POST">
+      {# https://docs.djangoproject.com/en/3.2/ref/csrf/ #}
+      {% csrf_token %}
+      <input type="submit" value="celery run">
+    </form>
+  </div>
+
 </body>
 </html>

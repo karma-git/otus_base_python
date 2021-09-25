@@ -21,6 +21,7 @@ from web.settings import DEBUG
 urlpatterns = [
     path('', blog.root),
     path('tags/', blog.check_tags),
+    path('task/status/', blog.check_task),
     path('admin/', admin.site.urls),
 ]
 

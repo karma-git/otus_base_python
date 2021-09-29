@@ -1,0 +1,10 @@
+{% extends "store/base_generic.html" %}
+
+{% block content %}
+  <h1>Новый покупатель</h1>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="save">
+</form>
+{% endblock content %}

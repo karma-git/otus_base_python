@@ -2,6 +2,7 @@
 
 {% block content %}
   <h1 >Hi customers!</h1>
+  <div style="margin-top: 50px" id="customers">
   {% if not object_list.exists %}
     <p><b>Unfortunately, we don't have buyers yet.</b>
   {% else %}
@@ -11,6 +12,10 @@
       {% endfor %}
     </ul>
   {% endif %}
+  </div>
+  <div style="margin-top: 35px" id="add">
+    <a href="{% url 'customer_create' %}" class="btn btn-primary" role="button">add new Customer</a>
+  </div>
 {% endblock content %}
 
 {% comment %}

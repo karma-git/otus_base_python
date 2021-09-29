@@ -21,6 +21,8 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', store.CustomerListView.as_view(), name='main'),
+    path('customer/create/', store.CustomerCreateView.as_view(), name='customer_create'),
+    path('products/', store.ProductListView.as_view(), name='products'),
     path('about/', TemplateView.as_view(template_name='store/about.html'), name='about'),
     path('admin/', admin.site.urls),
     # 3rd party

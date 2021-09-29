@@ -5,7 +5,7 @@
     <title>Hello</title>
 </head>
 <body>
-{% for author in authors %}
+{% for author in object_list %}
   <p> Name -> {{ author.name }}, email -> {{ author.email }}</p>
 {% endfor %}
 </body>

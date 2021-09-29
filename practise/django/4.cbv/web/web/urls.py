@@ -20,7 +20,8 @@ from web.settings import DEBUG
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path('', blog.root),
+    # path('', blog.root),  # Deeprecated FBV
+    path('', blog.AuthorListView.as_view(template_name='blog/index.html')),
     path('tags/', blog.check_tags),
     path('about/', TemplateView.as_view(template_name='blog/about.html')),
     path('admin/', admin.site.urls),

@@ -4,13 +4,20 @@ from blog.models import  (
     Articles,
     Tags
 )
+from django.views.generic import ListView
 
 # Create your views here.
-def root(request):
-    authors = Author.objects.all()
-    # bad query for our index.html
-    # authors = Author.objects.only('name').all()
-    return render(request, 'blog/index.html', {'authors': authors})
+
+# Deprecated FBV <root>
+
+class AuthorListView(ListView):
+    model = Author
+
+# def root(request):
+#     authors = Author.objects.all()
+#     # bad query for our index.html
+#     # authors = Author.objects.only('name').all()
+#     return render(request, 'blog/index.html', {'authors': authors})
 
 def check_tags(request):
     # tags = Tags.objects.all()

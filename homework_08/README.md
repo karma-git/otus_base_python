@@ -13,5 +13,6 @@
 
 Сборка проекта, создание схемы БД и суперпользователя для админки (пароль указывается в build-args).
 ```bash
-docker build -t otus_hw7:1.0 --build-arg SU_PW=123456 .
+docker build -t otus_h8:1.0 --build-arg SU_PW=123456 .
+docker run -d -p 8080:8080 otus_hw8:1.0
 ```

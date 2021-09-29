@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html>
- <head>
-  <meta charset="utf-8" />
-  <title>store app</title>
- </head>
- <body>
-  <b>Hi customers!</b>
+{% extends "store/base_generic.html" %}
+
+{% block content %}
+  <h1>Hi customers!</h1>
   {% if not customers.exists %}
     <p><b>Unfortunately, we don't have buyers yet.</b>
   {% else %}
@@ -13,8 +9,7 @@
       <li>{{ customer }}</li>
     {% endfor %}
   {% endif %}
- </body>
-</html>
+{% endblock content %}
 
 {% comment %}
 Checking empty query set:

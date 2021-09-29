@@ -74,3 +74,34 @@ path('author/create/', blog.AuthorCreate.as_view(), name='author_create'),
     </form>
 </body>
 ```
+## UpdateView + dynamic urls
+Во вьюхе возвращаем колбэк нужной страницы.
+
+**view.py**
+```python
+from django.urls import reverse_lazy
+...
+class AuthorUpdate(UpdateView):
+    model = Author
+    success_url = reverse_lazy('main_page')
+    fields = '__all__'
+```
+**urls.py**
+```python
+path('author/update/<int:pk>/', blog.AuthorUpdate.as_view(), name='author_update'),
+```
+
+**author_list.html**
+```html
+...
+<body>
+  <h1>Authors</h1>
+  <ul>
+    {% for author in object_list %}
+      <p> Name -> {{ author.name }}, email -> {{ author.email }}</p>
+      <p><a href="{% url 'author_update' author.pk %}">edit</a></p>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'author_create' %}">Create</a>
+</body>
+```

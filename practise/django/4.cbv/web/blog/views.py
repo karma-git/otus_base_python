@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from blog.models import  (
     Author, 
     Articles,
@@ -8,6 +9,7 @@ from django.views.generic import (
     ListView,
     CreateView,
     DetailView,
+    UpdateView,
 )
 
 # Create your views here.
@@ -20,6 +22,11 @@ class AuthorListView(ListView):
 class AuthorCreate(CreateView):
     model = Author
     success_url = '/'
+    fields = '__all__'
+
+class AuthorUpdate(UpdateView):
+    model = Author
+    success_url = reverse_lazy('main_page')
     fields = '__all__'
 
 # def root(request):

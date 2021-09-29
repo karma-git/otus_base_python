@@ -7,6 +7,7 @@
     <li class="list-group-item">{{ object.email }}</li>
   </ul>
   <div style="margin-top: 35px" id="main">
+    <a href="{% url 'customer_update' object.pk %}" class="btn btn-dark" role="button">edit</a>
     <a href="{% url 'main' %}" class="btn btn-dark" role="button">main page</a>
   </div>
 </form>

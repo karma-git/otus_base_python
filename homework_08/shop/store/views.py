@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from store.models import Customer
+from django.views.generic import ListView
 
 # Create your views here.
-def index_view(request):
-    customers = Customer.objects.all()
-    return render(request, "store/index.html", context={"customers": customers})
+class CustomerListView(ListView):
+    model = Customer

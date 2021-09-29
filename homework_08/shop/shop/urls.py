@@ -20,7 +20,7 @@ import store.views as store
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path('', store.index_view),
+    path('', store.CustomerListView.as_view(), name='main'),
     path('about/', TemplateView.as_view(template_name='store/about.html'), name='about'),
     path('admin/', admin.site.urls),
     # 3rd party

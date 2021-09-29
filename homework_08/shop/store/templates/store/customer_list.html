@@ -1,13 +1,15 @@
 {% extends "store/base_generic.html" %}
 
 {% block content %}
-  <h1>Hi customers!</h1>
-  {% if not customers.exists %}
+  <h1 >Hi customers!</h1>
+  {% if not object_list.exists %}
     <p><b>Unfortunately, we don't have buyers yet.</b>
   {% else %}
-    {% for customer in customers %}
-      <li>{{ customer }}</li>
-    {% endfor %}
+    <ul class="list-group list-group-flush">
+      {% for customer in object_list %}
+        <li class="list-group-item">{{ customer.name }}</li>
+      {% endfor %}
+    </ul>
   {% endif %}
 {% endblock content %}
 

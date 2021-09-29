@@ -1,0 +1,24 @@
+{% extends "store/base_generic.html" %}
+
+{% block content %}
+  <h1 >Hi customers!</h1>
+  <div style="margin-top: 50px" id="customers">
+  {% if not object_list.exists %}
+    <p><b>Unfortunately, we don't have buyers yet.</b>
+  {% else %}
+    <ul class="list-group list-group-flush">
+      {% for customer in object_list %}
+        <li class="list-group-item"><a href="{% url 'customer_detail' customer.pk %}">{{ customer.name }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  </div>
+  <div style="margin-top: 35px" id="add">
+    <a href="{% url 'customer_create' %}" class="btn btn-primary" role="button">add new customer</a>
+  </div>
+{% endblock content %}
+
+{% comment %}
+Checking empty query set:
+https://stackoverflow.com/questions/1387727/checking-for-empty-queryset-in-django 
+{% endcomment %}

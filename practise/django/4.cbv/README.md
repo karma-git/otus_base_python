@@ -43,3 +43,34 @@ path('', blog.AuthorListView.as_view(),
 {% endfor %}
 </body>
 ```
+## CreateView + dynamic urls
+Создаем вьюху (предлагает заполнить все поля из модели Author, и при успехе перенаправляет на главную страницу).
+```python
+class AuthorCreate(CreateView):
+    model = Author
+    success_url = '/'
+    fields = '__all__'
+
+```
+**urls.py**
+```python
+path('author/create/', blog.AuthorCreate.as_view(), name='author_create'),
+```
+Используем ***author_create*** как алиас для урла:
+
+**author_list.html**
+```html
+...
+<a href="{% url 'author_create' %}">Create</a>
+```
+**author_form.html**
+```html
+<body>
+    <h1>New author</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="save">
+    </form>
+</body>
+```

@@ -4,7 +4,11 @@ from blog.models import  (
     Articles,
     Tags
 )
-from django.views.generic import ListView
+from django.views.generic import (
+    ListView,
+    CreateView,
+    DetailView,
+)
 
 # Create your views here.
 
@@ -12,6 +16,11 @@ from django.views.generic import ListView
 
 class AuthorListView(ListView):
     model = Author
+
+class AuthorCreate(CreateView):
+    model = Author
+    success_url = '/'
+    fields = '__all__'
 
 # def root(request):
 #     authors = Author.objects.all()

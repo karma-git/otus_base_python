@@ -22,6 +22,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     # path('', blog.root),  # Deeprecated FBV
     path('', blog.AuthorListView.as_view()),
+    path('author/create/', blog.AuthorCreate.as_view(), name='author_create'),
     # path('authors', blog.AuthorDetailView.as_view(template_name='blog/authors.html')),
     path('tags/', blog.check_tags),
     path('about/', TemplateView.as_view(template_name='blog/about.html')),

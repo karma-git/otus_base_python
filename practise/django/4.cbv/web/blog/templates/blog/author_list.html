@@ -5,8 +5,9 @@
     <title>Hello</title>
 </head>
 <body>
-{% for author in object_list %}
-  <p> Name -> {{ author.name }}, email -> {{ author.email }}</p>
-{% endfor %}
+  {% for author in object_list %}
+    <p> Name -> {{ author.name }}, email -> {{ author.email }}</p>
+  {% endfor %}
+  <a href="{% url 'author_create' %}">Create</a>
 </body>
 </html>

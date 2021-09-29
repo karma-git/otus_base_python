@@ -17,9 +17,11 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
 import store.views as store
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', store.index_view),
+    path('about/', TemplateView.as_view(template_name='store/about.html'), name='about'),
     path('admin/', admin.site.urls),
     # 3rd party
     url(r'^health_check/', include('health_check.urls')),

@@ -19,6 +19,9 @@ from django.views.generic import (
 class AuthorListView(ListView):
     model = Author
 
+class AuthorDetail(DetailView):
+    model = Author
+
 class AuthorCreate(CreateView):
     model = Author
     success_url = '/'

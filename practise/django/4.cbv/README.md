@@ -45,6 +45,8 @@ path('', blog.AuthorListView.as_view(),
 ```
 ## CreateView + dynamic urls
 Создаем вьюху (предлагает заполнить все поля из модели Author, и при успехе перенаправляет на главную страницу).
+
+**view.py**
 ```python
 class AuthorCreate(CreateView):
     model = Author
@@ -103,5 +105,32 @@ path('author/update/<int:pk>/', blog.AuthorUpdate.as_view(), name='author_update
     {% endfor %}
   </ul>
   <a href="{% url 'author_create' %}">Create</a>
+</body>
+```
+## DetailView
+Позволяет из ListView провалиться по ссылки в детальной описание объекта (получить все поля из его модели).
+
+**view.py**
+```python
+class AuthorDetail(DetailView):
+    model = Author
+```
+
+**urls.py**
+```python
+    path('author/detail/<int:pk>/', blog.AuthorDetail.as_view(), name='author_detail'),
+```
+**author_list.html** - добавляем ссылку на страницу с детальным описанием объекта.
+```html
+...
+<p><a href="{% url 'author_detail' author.pk %}">detail</a></p>
+```
+**author_detail.html**
+```html
+...
+<body>
+  <h1>Author {{ object.name }}</h1>
+  {{ object.email }}
+  <p><a href="{% url 'main_page' %}">home</a></p>
 </body>
 ```

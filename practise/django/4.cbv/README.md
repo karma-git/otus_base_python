@@ -32,10 +32,10 @@ class AuthorListView(ListView):
 
 **urls.py**
 ```python
-path('', blog.AuthorListView.as_view(template_name='blog/index.html')),
+path('', blog.AuthorListView.as_view(),
 ```
 
-**blog/index.html**
+**blog/author_list.html**
 ```html
 <body>
 {% for author in object_list %}

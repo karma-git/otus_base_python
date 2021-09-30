@@ -8,18 +8,24 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView
 class CustomerListView(ListView):
     model = Customer
 
+
 class CustomerCreateView(CreateView):
     model = Customer
-    success_url = reverse_lazy('main')
+    success_url = reverse_lazy("main")
     form_class = CustomerForm
+
 
 class CustomerUpdateView(UpdateView):
     model = Customer
-    success_url = reverse_lazy('main') # TODO return customer_detail current user
     form_class = CustomerForm
+
+    def get_success_url(self):
+        return reverse_lazy("customer_detail", kwargs={"pk": self.object.id})
+
 
 class CustomerDetailView(DetailView):
     model = Customer
+
 
 class ProductListView(ListView):
     model = Product

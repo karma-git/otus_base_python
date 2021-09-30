@@ -20,9 +20,11 @@ Third-party application для проверки работоспособност
 $ curl -v -X GET http://127.0.0.1:8000/health_check/
 ```
 ### Сборка
-Докерфайл проверен с помощью [hadolint](https://hadolint.github.io/hadolint/) и [trivy config](https://aquasecurity.github.io/trivy/v0.17.0/).
-
-Сборка проекта, создание схемы БД и суперпользователя для админки (пароль указывается в build-args).
+Сборка проекта c помощью docker. Включает в себя выполнение миграций, созданию суперпользователя и запуск dev сервера.
+```bash 
+docker build -t otus_h8:1.0 --build-arg SU_PW=123456 .
+```
+Запуск:
 ```bash
-docker build -t otus_hw7:1.0 --build-arg SU_PW=123456 .
+docker run -d -p 8080:8080 otus_hw8:1.0
 ```

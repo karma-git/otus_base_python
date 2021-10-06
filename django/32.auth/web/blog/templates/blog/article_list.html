@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+  Articles
+{% endblock %}
+
+{% block content %}
+  <div align="center" style="margin-top: 80px" id="greetings">
+  
+    {% if not object_list.exists %}
+      <p class="text-danger fs-2">There is no articles</p>     
+    {% endif %}
+
+    {% for article in object_list %}
+      <li class="list-group-item"> Title: {{ article.title }} (Author: {{ article.author.username }}) </li>
+    {% endfor %}
+  </div>
+{% endblock content %}

@@ -11,3 +11,5 @@ b451817180e517d0805f4f32964433c90db39078 - добавил тулбар
 7e81f864c9713cf3de103a8df7e1f4715e6513ae - login/logout
 
 d3fe5673037cb2d97415f115f78954aa05376a57 - форма регистрации, отключение проверки пароля в settings.py
+
+fbbdd32d5c236da9c5228402f6b09f97282897c4 - LoginRequiredMixin

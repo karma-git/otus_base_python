@@ -14,5 +14,10 @@
     {% for article in object_list %}
       <li class="list-group-item"> Title: {{ article.title }} (Author: {{ article.author.username }}) </li>
     {% endfor %}
+
+    <div style="margin-top: 35px" id="add">
+      <a href="{% url 'article_create' %}" class="btn btn-primary" role="button">add new article</a>
+    </div>
+  
   </div>
 {% endblock content %}

@@ -23,6 +23,9 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='blog/index.html'), name="index"),
     path('registration', blog.Registration.as_view(), name="registration"),
     path('articles', blog.ArticlesListView.as_view(), name='articles'),
+    # START CRUD
+    path('article/create/', blog.ArticleCreate.as_view(), name='article_create'),
+    # END CRUD
     path('admin/', admin.site.urls),
     path('accounts/', include("django.contrib.auth.urls")),
 ]

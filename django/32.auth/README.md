@@ -16,3 +16,4 @@ fbbdd32d5c236da9c5228402f6b09f97282897c4 - LoginRequiredMixin
 
 8283b2d6b690b04c42f8dd544163a58a1e24d2cf - Новая команда в manage.py, инициализация новых групп.
 
+189f3624028359953c88ab6a0d775157870d6be0 - Create с помощью PermissionRequierd - при попытки пройти во вьюху без нужных прав получается 403

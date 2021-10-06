@@ -125,3 +125,5 @@ STATIC_URL = '/static/'
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda _: True,
 }
+
+AUTH_USER_MODEL = 'blog.User'

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 from .forms import CustomUserCreationForm
 from .models import User, Article, Tag
 
@@ -24,8 +25,10 @@ class ArticleCreate(PermissionRequiredMixin, CreateView):
     success_url = 'articles'
     fields = "__all__"
 
-class ArticleDetail(DetailView):
-     pass
+class ArticleDetail(PermissionRequiredMixin, DetailView):
+     model = Article
+     permission_required = 'blog.view_article'
+     queryset = Article.objects.only('title', 'text', 'author__username').select_related('author')
 
 class ArticleUpdate(UpdateView):
      pass

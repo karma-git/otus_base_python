@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+  Articles
+{% endblock %}
+
+{% block content %}
+  <div align="center" style="margin-top: 80px" id="greetings">
+  
+      <li class="list-group-item"> {{ object.title }} </li>
+      <li class="list-group-item"> {{ object.text }} </li>
+      <li class="list-group-item"> {{ object.author.username }} </li>
+
+
+    <div style="margin-top: 35px" id="edit">
+      <a href="#" class="btn btn-primary" role="button">edit</a>
+    </div>
+
+  
+  </div>
+{% endblock content %}

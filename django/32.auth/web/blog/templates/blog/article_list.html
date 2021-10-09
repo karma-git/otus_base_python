@@ -13,6 +13,7 @@
 
     {% for article in object_list %}
       <li class="list-group-item"> Title: {{ article.title }} (Author: {{ article.author.username }}) </li>
+      <ul><a href="{% url 'article_detail' article.pk %}">detail</a></ul>
     {% endfor %}
 
     <div style="margin-top: 35px" id="add">

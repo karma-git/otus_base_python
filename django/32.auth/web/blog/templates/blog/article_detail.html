@@ -11,11 +11,9 @@
       <li class="list-group-item"> {{ object.text }} </li>
       <li class="list-group-item"> {{ object.author.username }} </li>
 
+      {% url 'article_update' object.id as ue %}
+      {% url 'article_detail' object.id as ud %}
+      {% include 'button_conditionals.html' with url_edit=ue url_delete=ud %}
 
-    <div style="margin-top: 35px" id="edit">
-      <a href="#" class="btn btn-primary" role="button">edit</a>
-    </div>
-
-  
   </div>
 {% endblock content %}

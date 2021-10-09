@@ -30,16 +30,7 @@ class ArticleDetail(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
      permission_required = 'blog.view_article'
      queryset = Article.objects.only('title', 'text', 'author__username').select_related('author')
 
-
-class ArticleUpdate(LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin, UpdateView):
-     model = Article
-     permission_required = 'blog.change_article'
-     success_url = reverse_lazy('main_page')
-     fields = ('title', 'text',)
-
-     def get_success_url(self):
-          return reverse_lazy("article_detail", kwargs={"pk": self.object.id})
-
+class ArticleTestMixin(UpdateView, UserPassesTestMixin):
      def test_func(self):
           article_author_username = (
                Article.objects.filter(id=self.kwargs['pk'])
@@ -52,5 +43,18 @@ class ArticleUpdate(LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestM
           is_moderator = self.request.user.groups.filter(Q(name='Moderator') | Q(name='Judge')).exists()
           return is_author or is_moderator
 
-class ArticleDelete(DeleteView):
-     pass
+
+class ArticleUpdate(LoginRequiredMixin, PermissionRequiredMixin, ArticleTestMixin):
+     model = Article
+     permission_required = 'blog.change_article'
+     fields = ('title', 'text',)
+
+     def get_success_url(self):
+          return reverse_lazy("article_detail", kwargs={"pk": self.object.id})
+
+class ArticleDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView, ArticleTestMixin):
+     model = Article
+     permission_required = 'blog.delete_article'
+     success_url = reverse_lazy('articles')
+     fields = "__all__"
+

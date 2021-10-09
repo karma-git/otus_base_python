@@ -12,7 +12,7 @@
       <li class="list-group-item"> {{ object.author.username }} </li>
 
       {% url 'article_update' object.id as ue %}
-      {% url 'article_detail' object.id as ud %}
+      {% url 'article_delete' object.id as ud %}
       {% include 'button_conditionals.html' with url_edit=ue url_delete=ud %}
 
   </div>

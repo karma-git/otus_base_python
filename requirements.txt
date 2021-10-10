@@ -1,0 +1,14 @@
+aiohttp
+asyncpg
+SQLAlchemy
+pytest
+anyio
+pytest-asyncio
+pytest-trio
+pytest-twisted
+Twisted
+flask
+
+
+
+

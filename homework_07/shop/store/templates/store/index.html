@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>store app</title>
+ </head>
+ <body>
+  <b>Hi customers!</b>
+  {% if not customers.exists %}
+    <p><b>Unfortunately, we don't have buyers yet.</b>
+  {% else %}
+    {% for customer in customers %}
+      <li>{{ customer }}</li>
+    {% endfor %}
+  {% endif %}
+ </body>
+</html>
+
+{% comment %}
+Checking empty query set:
+https://stackoverflow.com/questions/1387727/checking-for-empty-queryset-in-django 
+{% endcomment %}

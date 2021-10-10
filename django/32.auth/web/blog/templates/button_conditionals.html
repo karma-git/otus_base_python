@@ -1,6 +1,0 @@
-{% if request.user == article.author or request.user|has_group:"Moderator" or request.user|has_group:"Judge" %}
-    <div style="margin-top: 35px" id="edit">
-    <a href="{{ url_edit }}" class="btn btn-primary" role="button">edit</a>
-    <a href="{{ url_delete }}" class="btn btn-primary" role="button">delete</a>
-    </div>
-{% endif %}

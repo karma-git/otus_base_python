@@ -3,7 +3,7 @@ name: Run tests for homework
 on:
   push:
     branches:
-      - PythonBasic.2021-02!
+      - PythonBasic.2021-02
 
 jobs:
   homework-tests:

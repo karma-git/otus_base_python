@@ -9,19 +9,14 @@ GROUPS_PERMISSIONS = {
         models.Article: ['view'],
         models.Tag: ['view'],
     },
-
     'Author': {
-        models.Article: ['add', 'change', 'view'],
-        models.Tag: ['add', 'change', 'view'],
-    },
-    'Moderator': {
-        models.Article: ['add', 'change', 'view'],
-        models.Tag: ['add', 'change', 'view'],
-    },
-    'Judge': {
         models.Article: ['add', 'change', 'delete', 'view'],
         models.Tag: ['add', 'change', 'delete', 'view'],
-    }
+    },
+    'Moderator': {
+        models.Article: ['add', 'change', 'delete', 'view'],
+        models.Tag: ['add', 'change', 'delete', 'view'],
+    },
 }
 
 class Command(BaseCommand):

@@ -1,33 +1,70 @@
 # Overview
 
-f8dbc442a5d8ff8efb83146f3ba9a70f497484d8 - создал проект
+ТЗ:
 
-b451817180e517d0805f4f32964433c90db39078 - добавил тулбар
+[Усовершенствовать блог](django/29.django-orm#схема).
+- Author теперь наследуется от базового пользователя аутентификации django.
+- На главной странице видно username текущего авторизированного пользователя.
+- Login/Logout/Registration
+- Для просмотра урла Articles - нужно залогиниться (редирект на login).
+- Добавляются несколько групп пользователей, права распределяются согласно группам(при попытке выполнить запрещенную операцию - получаем [403](https://developer.mozilla.org/ru/docs/Web/HTTP/Status)):
+1. Newbee - RO права на все модели
+2. Author - VCUD (View Create Update Delete) на Article (подразумевается, что может делать UD только своих объектов).
+3. Moderator - VCUD на Article (модерирует всех авторов).
+4. Judge - фул права на сайте.
+- Элементы CUD видны только при наличии у пользователя прав выполнять операцию.
 
-9cfa7c2474d79e32d999a10c16a4e1ee9aeb1482 - создал Юзера унаследовано от auth.User, он может логиниться в админку
+## Расширение Пользователя из django.auth
 
-8074f0efac6b4c5593fe62ee609338a4b65f9204 - главная страница, на ней видно имя пользователя
+Выбор - Расширение модели пользователя с помощью наследования AbstractUser (полулайтовый метод, делается на старте проекта). 
 
-7e81f864c9713cf3de103a8df7e1f4715e6513ae - login/logout
+В связанных моделях ссылаемся на модель пользователя через `settings.AUTH_USER_MODEL`
 
-d3fe5673037cb2d97415f115f78954aa05376a57 - форма регистрации, отключение проверки пароля в settings.py
+**models.py**
+```python
+# models.py
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
-fbbdd32d5c236da9c5228402f6b09f97282897c4 - LoginRequiredMixin
+class User(AbstractUser):
+    bio = models.TextField(max_length=500, blank=True)
+    location = models.CharField(max_length=30, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
 
-8283b2d6b690b04c42f8dd544163a58a1e24d2cf - Новая команда в manage.py, инициализация новых групп.
+    def __str__(self):
+        return f'Name={self.username},email={self.email}'
 
-189f3624028359953c88ab6a0d775157870d6be0 - Create с помощью PermissionRequierd - при попытки пройти во вьюху без нужных прав получается 403
+class Article(models.Model):
+    title = models.CharField(max_length=64)
+    text = models.TextField()
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='authors')
 
-1c0c32a417ac59c60268043b02d79c08c807979d - Detail view с PermissionRequierd
+    def __str__(self):
+        return f'Title={self.title},author={self.author}'
+```
+Подключаем этого пользователя в админке.
+```python
+#settings.py
+...
+AUTH_USER_MODEL = 'blog.User'
+# admin.py
+from django.contrib.auth.admin import UserAdmin
+from .models import User
+...
+admin.site.register(User, UserAdmin)
+```
+Links:
+- [https://testdriven.io/](https://testdriven.io/blog/django-custom-user-model/) - Creating a Custom User Model in Django
+- [docs.django](https://docs.djangoproject.com/en/dev/topics/auth/customizing/#extending-the-existing-user-model) - Auth. Custom User model
+- [https://tproger.ru/](https://tproger.ru/translations/extending-django-user-model/) - Расширение модели пользователя в Django: сравнение нескольких стратегий с примерами кода
 
-XXXX - большой коммит
-
-### [Custom Managment Commands <CMC>](https://docs.djangoproject.com/en/3.2/howto/custom-management-commands/)
+## Custom Managment Commands <CMC>
 Зачем?
 
 Хочу одной командой создать несколько дефолтных групп пользователей и назначить им определенные права на модели.
 
-Создаю в приложении модуль `management` и etc, в файлике initgroups пишу логику, название файлика == название команды
+Создаю в приложении модуль `management` и etc, в файлике initgroups пишу логику, название файлика == название команды.
 ```bash
 .blog
 ├── __init__.py
@@ -45,7 +82,11 @@ XXXX - большой коммит
 └── views.py
 ```
 
-### [Custom Template Tags <CTT>](https://docs.djangoproject.com/en/1.11/howto/custom-template-tags/)
+Links:
+- [docs.django](https://docs.djangoproject.com/en/3.2/howto/custom-management-commands/) CMC
+- [coderoad.ru](https://coderoad.ru/22250352/%D0%9F%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BD%D0%BE-%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%B9%D1%82%D0%B5-%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D1%83-django-%D1%81-%D1%80%D0%B0%D0%B7%D1%80%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D1%8F%D0%BC%D0%B8) - Программно создайте группу django с разрешениями
+
+## Custom Template Tags <CTT>
 Зачем?
 
 Хочу отображать html-элемент в зависимости от принадлежности пользователя к какой-либо группе пользователей.
@@ -123,7 +164,10 @@ TEMPLATES = [
 {% include 'button_conditionals.html' with url_edit=ue url_delete=ud %}
 ```
 
-### PermissionRequiredMixin
+Links:
+- [docs.django](https://docs.djangoproject.com/en/1.11/howto/custom-template-tags/) - CTT
+
+## PermissionRequiredMixin
 
 Если у полльзователя нет нужных разрешений - он получит 403.
 
@@ -134,9 +178,39 @@ class ArticleDetail(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
      queryset = Article.objects.only('title', 'text', 'author__username').select_related('author')
 ```
 
-### UserPassesTestMixin
+Links:
+- [docs.django](https://docs.djangoproject.com/en/3.2/topics/auth/default/#permissions-and-authorization) - Permissions and Authorization
+- [medium.com](https://medium.com/djangotube/django-roles-groups-and-permissions-introduction-a54d1070544) - Django Roles, Groups, and Permissions Introduction
+- [realpython.com](https://realpython.com/django-user-management/) - Get Started With Django Part 2: Django User Management
+
+## UserPassesTestMixin
 
 Нужно определить метод `test_func` внутри CBV, который должен возвращать bool. Пользователь будет получать 403 если не пройдет тест.
 
-## TODO
-Заставить при создании артикла использовать текущего пользователя!
+В данном кейсе создан миксин, который разрешать действие которое будет указано с помощью `PermissionRequiredMixin` для owner-а объекта Article и для пользователей у которых есть группа **"Moderator|Judge"**.
+
+
+```python
+class ArticleTestMixin(LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin):
+     model = Article
+     lookup = 'pk'
+
+     def test_func(self):
+          article_author_username = (
+               self.model.objects.filter(id=self.kwargs[self.lookup])
+               .only('author__username').select_related('author').first()
+               .author.username
+          )
+          current_username = self.request.user.username
+          is_author = True if article_author_username == current_username else False
+          is_moderator = self.request.user.groups.filter(Q(name='Moderator') | Q(name='Judge')).exists()
+          print(is_author, is_moderator)
+          return is_author or is_moderator
+
+class ArticleUpdate(ArticleTestMixin, UpdateView):
+    ...
+```
+
+Links:
+- - [docs.django](https://docs.djangoproject.com/en/3.2/topics/auth/default/#django.contrib.auth.mixins.UserPassesTestMixin) - UserPassesTestMixin
+- [**raturi.in**]((https://raturi.in/blog/custom-mixins-django-class-based-views/)) - How to create custom mixin in django class based views.

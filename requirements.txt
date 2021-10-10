@@ -1,0 +1,4 @@
+SQLAlchemy==1.4.25
+asyncio==3.4.3
+aiohttp==3.7.4.post0
+Flask==2.0.2

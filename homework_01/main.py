@@ -42,4 +42,3 @@ def filter_numbers(array, numbers_filter):
         return [i for i in array if i % 2 == 1]
     elif numbers_filter == PRIME:
         return list(filter(is_prime, array))
-

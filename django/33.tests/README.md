@@ -19,3 +19,10 @@ Links:
 https://realpython.com/testing-in-django-part-1-best-practices-and-examples/
 https://realpython.com/testing-in-django-part-2-model-mommy-vs-django-testing-fixtures/
 https://developer.mozilla.org/ru/docs/Learn/Server-side/Django/Testing
+
+# Тесты:
+
+- IndexPage
+- Auth
+- LoginRequired
+- Permissions

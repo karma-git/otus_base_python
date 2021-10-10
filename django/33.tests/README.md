@@ -16,8 +16,11 @@
 
 Links:
 - [docs.django](https://docs.djangoproject.com/en/3.2/intro/tutorial05/#create-a-test-to-expose-the-bug) - Create a test to expose the bug
+
 https://realpython.com/testing-in-django-part-1-best-practices-and-examples/
+
 https://realpython.com/testing-in-django-part-2-model-mommy-vs-django-testing-fixtures/
+
 https://developer.mozilla.org/ru/docs/Learn/Server-side/Django/Testing
 
 # Тесты:
@@ -26,3 +29,10 @@ https://developer.mozilla.org/ru/docs/Learn/Server-side/Django/Testing
 - Auth
 - LoginRequired
 - Permissions
+
+## Coverage
+```bash
+coverage run manage.py test blog -v 2
+coverage html
+```
+В фолдере с менеджмент скриптом соберется coverage репорт.

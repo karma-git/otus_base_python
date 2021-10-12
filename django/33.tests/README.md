@@ -8,8 +8,6 @@ Links:
 - [realpython.com](https://realpython.com/testing-in-django-part-2-model-mommy-vs-django-testing-fixtures/) - Testing in Django (Part 2) – Model Mommy vs Django Testing Fixtures
 - [developer.mozilla.org](http://developer.mozilla.org/ru/docs/Learn/Server-side/Django/Testing) - Руководство часть 10: Тестирование приложений Django
 
-https://developer.mozilla.org/ru/docs/Learn/Server-side/Django/Testing
-
 # Тесты:
 
 - IndexPage
@@ -20,7 +18,15 @@ https://developer.mozilla.org/ru/docs/Learn/Server-side/Django/Testing
 Запускаются с помощью:
 
 ```bash
-python manage.py test
+$ python manage.py test
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+.............
+----------------------------------------------------------------------
+Ran 13 tests in 2.644s
+
+OK
+Destroying test database for alias 'default'...
 ```
 
 ## Coverage

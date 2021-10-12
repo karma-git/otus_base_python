@@ -5,7 +5,7 @@ from blog.models import User
 import random
 import string
 
-class TestIndexPage(TestCase):
+class TestAuthElements(TestCase):
     """
     Запросы к элементам REGISTER / LOGIN / LOGOUT
     """

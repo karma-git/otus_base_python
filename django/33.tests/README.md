@@ -1,6 +1,6 @@
 # Overview
 
-Пишем тесты к [предыдущей](playground/django/32.auth/README.md) версии блога.
+Пишем тесты к [предыдущей](/django/32.auth/README.md) версии блога.
 
 Links:
 - [docs.django](https://docs.djangoproject.com/en/3.2/intro/tutorial05/#create-a-test-to-expose-the-bug) - Create a test to expose the bug

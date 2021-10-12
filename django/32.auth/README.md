@@ -212,5 +212,5 @@ class ArticleUpdate(ArticleTestMixin, UpdateView):
 ```
 
 Links:
-- - [docs.django](https://docs.djangoproject.com/en/3.2/topics/auth/default/#django.contrib.auth.mixins.UserPassesTestMixin) - UserPassesTestMixin
+- [docs.django](https://docs.djangoproject.com/en/3.2/topics/auth/default/#django.contrib.auth.mixins.UserPassesTestMixin) - UserPassesTestMixin
 - [**raturi.in**]((https://raturi.in/blog/custom-mixins-django-class-based-views/)) - How to create custom mixin in django class based views.

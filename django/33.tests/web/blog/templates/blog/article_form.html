@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+  New Article
+{% endblock %}
+
+{% block content %}
+  <div align="center" style="margin-top: 80px" id="greetings">
+  
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="save">
+    </form>
+  </div>
+{% endblock content %}

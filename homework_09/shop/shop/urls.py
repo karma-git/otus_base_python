@@ -38,6 +38,8 @@ urlpatterns = [
     path(
         "about/", TemplateView.as_view(template_name="store/about.html"), name="about"
     ),
+    path('registration', store.Registration.as_view(), name="registration"),
+    path('accounts/', include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
     # 3rd party
     url(r"^health_check/", include("health_check.urls")),

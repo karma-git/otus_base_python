@@ -20,20 +20,20 @@ import store.views as store
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path("", store.CustomerListView.as_view(), name="main"),
-    path(
-        "customer/create/", store.CustomerCreateView.as_view(), name="customer_create"
-    ),
-    path(
-        "customer/detail/<int:pk>/",
-        store.CustomerDetailView.as_view(),
-        name="customer_detail",
-    ),
-    path(
-        "customer/update/<int:pk>/",
-        store.CustomerUpdateView.as_view(),
-        name="customer_update",
-    ),
+    path('', TemplateView.as_view(template_name='store/index.html'), name="main"),
+    # path(
+    #     "customer/create/", store.CustomerCreateView.as_view(), name="customer_create"
+    # ),
+    # path(
+    #     "customer/detail/<int:pk>/",
+    #     store.CustomerDetailView.as_view(),
+    #     name="customer_detail",
+    # ),
+    # path(
+    #     "customer/update/<int:pk>/",
+    #     store.CustomerUpdateView.as_view(),
+    #     name="customer_update",
+    # ),
     path("products/", store.ProductListView.as_view(), name="products"),
     path(
         "about/", TemplateView.as_view(template_name="store/about.html"), name="about"

@@ -8,10 +8,15 @@ class ProductModelTest(TestCase):
     """
     Тестируется модель продукта
     """
+
     def setUp(self):
-        self.product_data = {'goods': 'Google Pixel 4a', 'description': 'экран: 5.8" (2340×1080)...', 'price': 36_990}
+        self.product_data = {
+            "goods": "Google Pixel 4a",
+            "description": 'экран: 5.8" (2340×1080)...',
+            "price": 36_990,
+        }
         self.product = Product.objects.create(**self.product_data)
-    
+
     def tearDown(self):
         """
         meaningless method
@@ -24,7 +29,7 @@ class ProductModelTest(TestCase):
         """
         qty = Product.objects.count()
         self.assertEqual(qty, 1)
-    
+
     def test_products_name(self):
         """
         Проверяется количество продуктов

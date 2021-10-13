@@ -29,7 +29,7 @@ USER app
 RUN python3 manage.py migrate \
   # KeyError exception if python doesn't find SU_PW env var
   && python3 manage.py shell -c \
-    "from django.contrib.auth.models import User; import os; \
+    "from store.models import User; import os; \
     User.objects.create_superuser('admin', 'admin@example.com', os.environ['SU_PW'])"
 
 EXPOSE 8080

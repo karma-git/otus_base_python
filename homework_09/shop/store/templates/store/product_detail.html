@@ -12,8 +12,12 @@
     <li class="list-group-item">{{ object.price }}</li>
   </ul>
   <div style="margin-top: 35px" id="main">
+    {% if perms.store.change_product %}
     <a href="{% url 'product_update' object.pk %}" class="btn btn-dark" role="button">edit</a>
+    {% endif %}
+    {% if perms.store.delete_product %}
     <a href="{% url 'product_delete' object.pk %}" class="btn btn-dark" role="button">delete</a>
+    {% endif %}
     <a href="{% url 'main' %}" class="btn btn-dark" role="button">main page</a>
   </div>
 </form>

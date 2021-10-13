@@ -1,0 +1,18 @@
+{% extends "store/base_generic.html" %}
+
+{% block title %}
+  Customer Detail
+{% endblock %}
+
+{% block content %}
+  <h1>Customer info:</h1>
+  <ul class="list-group">
+    <li class="list-group-item active" aria-current="true">{{ object.name }}</li>
+    <li class="list-group-item">{{ object.email }}</li>
+  </ul>
+  <div style="margin-top: 35px" id="main">
+    <a href="{% url 'customer_update' object.pk %}" class="btn btn-dark" role="button">edit</a>
+    <a href="{% url 'main' %}" class="btn btn-dark" role="button">main page</a>
+  </div>
+</form>
+{% endblock content %}

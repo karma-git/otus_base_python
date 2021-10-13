@@ -1,0 +1,17 @@
+{% extends "store/base_generic.html" %}
+
+{% block title %}
+  About
+{% endblock %}
+
+{% block content %}
+  <div align="center" style="margin-top: 80px" id="header">
+    <p align="center" class="text-info fs-2" style="font-size: x-large">Store</p>
+    <p align="cener" class="fw-light fs-4">it's a platform for goods selection, price comparison
+      and profitable purchases</p>
+  </div>
+
+  <div align="center" style="margin-top: 50px">
+    <a href="{% url 'products' %}" class="btn btn-dark" role="button">Go to shopping</a>
+  </div>
+{% endblock content %}

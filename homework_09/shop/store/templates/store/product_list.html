@@ -11,8 +11,11 @@
   {% else %}
     <ul class="list-group list-group-flush">
       {% for product in object_list %}
-        <li class="list-group-item">{{ product.goods }}</li>
+        <li class="list-group-item"><a href="{% url 'product_detail' product.pk %}">{{ product.goods }}</a> -> {{ product.price }} RUB</li>
       {% endfor %}
     </ul>
+  <div style="margin-top: 35px" id="add">
+    <a href="{% url 'product_create' %}" class="btn btn-primary" role="button">add new product</a>
+  </div>
   {% endif %}
 {% endblock content %}

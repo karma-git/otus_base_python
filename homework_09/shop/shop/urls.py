@@ -35,6 +35,10 @@ urlpatterns = [
     #     name="customer_update",
     # ),
     path("products/", store.ProductListView.as_view(), name="products"),
+    path("product/create/", store.ProductCreateView.as_view(), name="product_create"),
+    path("product/detail/<int:pk>/", store.ProductDetailView.as_view(), name="product_detail"),
+    path("product/update/<int:pk>/", store.ProductUpdateView.as_view(), name="product_update"),
+    path("product/delete/<int:pk>/", store.ProductDeleteView.as_view(), name="product_delete"),
     path(
         "about/", TemplateView.as_view(template_name="store/about.html"), name="about"
     ),

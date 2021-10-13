@@ -1,0 +1,20 @@
+{% extends "store/base_generic.html" %}
+
+{% block title %}
+  Product Detail
+{% endblock %}
+
+{% block content %}
+  <h1>Product info:</h1>
+  <ul class="list-group">
+    <li class="list-group-item active" aria-current="true">{{ object.goods }}</li>
+    <li class="list-group-item">{{ object.description }}</li>
+    <li class="list-group-item">{{ object.price }}</li>
+  </ul>
+  <div style="margin-top: 35px" id="main">
+    <a href="{% url 'product_update' object.pk %}" class="btn btn-dark" role="button">edit</a>
+    <a href="{% url 'product_delete' object.pk %}" class="btn btn-dark" role="button">delete</a>
+    <a href="{% url 'main' %}" class="btn btn-dark" role="button">main page</a>
+  </div>
+</form>
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends "store/base_generic.html" %}
+
+{% block title %}
+  Confirm Delete Product
+{% endblock %}
+
+{% block content %}
+  <div align="center" style="margin-top: 80px" id="greetings">
+    
+    <form method="post">{% csrf_token %}
+        <p>Are you sure you want to delete "{{ object.goods }}"?</p>
+        <input type="submit" value="Confirm" class="btn btn-primary" role="button">
+    </form>
+
+  </div>
+{% endblock content %}

@@ -1,8 +1,27 @@
+import factory
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django import forms
 from store.models import User, Product
 
+
+class UserFactory(factory.Factory):
+    class Meta:
+        model = User
+    
+    username = 'user'
+    is_superuser = False
+
+class AdminFactory(factory.Factory):
+    class Meta:
+        model = User
+    
+    username = 'admin'
+    is_superuser = True
+
+class ArticleFactory(factory.Factory):
+    class Meta:
+        model = Product
 
 class TestUserPermissions(TestCase):
     """
@@ -34,3 +53,13 @@ class TestUserPermissions(TestCase):
         response = self.client.get('/products/')
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Unfortunately, our stock is empty right now.')
+    
+    def test_products_page_without_add_permission(self):
+        """
+        Проверяется что залогиненный пользователь не может добавлять новый продукт
+        """
+        self.client.login(**self.user_data)
+        response = self.client.get('/products/')
+        self.assertNotContains(response, 'add new product')
+        response = self.client.get('/product/create/')
+        self.assertEqual(response.status_code, 403)

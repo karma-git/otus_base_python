@@ -18,9 +18,12 @@
     </ul>
   {% endif %}
   </div>
+  
+  {% if perms.store.add_product %}
   <div style="margin-top: 35px" id="add">
     <a href="{% url 'customer_create' %}" class="btn btn-primary" role="button">add new customer</a>
   </div>
+  {% endif %}
 {% endblock content %}
 
 {% comment %}

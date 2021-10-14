@@ -1,7 +1,13 @@
+import logging
+
 from flask import Blueprint, render_template, request, redirect, url_for
-from werkzeug.exceptions import NotFound, BadRequest
+from werkzeug.exceptions import NotFound, BadRequest, InternalServerError
+from sqlalchemy.exc import IntegrityError, DatabaseError
 
 from models import Product
+from models.database import db
+
+log = logging.getLogger(__name__)
 
 products_bp = Blueprint('products', __name__)
 
@@ -37,26 +43,33 @@ def products_create_view():
     if not goods:
         raise BadRequest("Please provide product name!")
 
-    product_id = len(PRODUCTS_DATA) + 1
-    new_product = {
-                product_id : {
-                    'goods': goods,
-                    'description': description,
-                    'price': price
-                }
-                }
-    PRODUCTS_DATA.update(new_product)
-    return redirect(url_for("products.product_detail", product_id=product_id))
+    product = Product(
+        goods=goods, 
+        description=description,
+        price=price
+        )
+
+    db.session.add(product)
+    try:
+        db.session.commit()
+    except IntegrityError:
+        log.exception("Couldn't add new product, got IntegrityError")
+        db.session.rollback()
+        raise BadRequest("Error adding new product, name is not uniq")
+    except DatabaseError:
+        log.exception("Couldn't add new product, got DatabaseError")
+        db.session.rollback()
+        raise InternalServerError("Error adding new product")
+    
+    return redirect(url_for("products.product_detail", product_id=product.id))
 
 @products_bp.route('/<int:product_id>', endpoint='product_detail')
 def products_read_view(product_id: int):
     # product = PRODUCTS_DATA.get(product_id)
-    product = Product.query.filter(Product.id == product_id).first()
+    product = Product.query.filter_by(id=product_id).one_or_none()
     if product is None:
         raise NotFound(f"No product for id {product_id}")
-    return render_template("products/detail.html", 
-    product_id=product.id, 
-    product=product)
+    return render_template("products/detail.html", product=product)
 
 @products_bp.route('/<int:product_id>', endpoint='product_update')
 def products_update_view(product_id: int):

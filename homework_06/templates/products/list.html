@@ -5,16 +5,21 @@
 {% endblock %}
 
 {% block content %}
-  <div>
-    <ul>
+  <h1>Our products:</h1>
+  {% if not products %}
+  <p class="text-danger font-monospace">Unfortunately, our stock is empty right now.</p>
+  {% else %}
+    <ul class="list-group list-group-flush">
       {% for product_id in products %}
-        <li>
-          <a href="#">
-            {{ products[product_id]['goods'] }} 
-          </a> -> price {{ products[product_id]['price'] }}
-        </li>
+        <li class="list-group-item">
+            <a href="{{ url_for('products.product_detail', product_id=product_id) }}">
+                {{ products[product_id]['goods'] }}
+            </a> 
+            -> {{ products[product_id]['price'] }} RUB</li>
       {% endfor %}
-    </ul>
-    <a href="#">Add new product</a>
+  {% endif %}
+  <div style="margin-top: 35px" id="add">
+    <a href="#" class="btn btn-primary" role="button">add new product</a>
   </div>
-{% endblock %}
+
+{% endblock content %}

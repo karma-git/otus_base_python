@@ -11,7 +11,7 @@
 ### Сборка
 Сборка проекта c помощью docker. Включает в себя выполнение миграций, созданию суперпользователя и запуск dev сервера.
 ```bash 
-docker build -t otus_h8:1.0 --build-arg SU_PW=123456 .
+docker build -t otus_hw8:1.0 --build-arg SU_PW=123456 .
 ```
 Запуск:
 ```bash

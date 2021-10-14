@@ -1,4 +1,6 @@
 from flask import Flask, render_template
+from flask_migrate import Migrate
+
 from views.products import products_bp
 from models.database import db
 
@@ -10,6 +12,10 @@ app.config.update(
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
 )
 db.init_app(app)
+
+# https://flask-migrate.readthedocs.io/en/latest/
+migrate = Migrate(app, db)
+
 
 @app.route("/")
 def index():

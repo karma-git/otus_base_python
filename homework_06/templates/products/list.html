@@ -1,0 +1,20 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}
+  Products list
+{% endblock %}
+
+{% block content %}
+  <div>
+    <ul>
+      {% for product_id in products %}
+        <li>
+          <a href="#">
+            {{ products[product_id]['goods'] }} 
+          </a> -> price {{ products[product_id]['price'] }}
+        </li>
+      {% endfor %}
+    </ul>
+    <a href="#">Add new product</a>
+  </div>
+{% endblock %}

@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template
-from werkzeug.exceptions import NotFound
+from flask import Blueprint, render_template, request, redirect, url_for
+from werkzeug.exceptions import NotFound, BadRequest
 
 products_bp = Blueprint('products', __name__)
 
@@ -23,9 +23,27 @@ def products_list_view():
     return render_template("products/list.html", products=PRODUCTS_DATA)
 
 # CRUD
-@products_bp.route('/create/', endpoint='product_create')
+@products_bp.route('/create/', methods=('GET', 'POST'), endpoint='product_create')
 def products_create_view():
-    pass
+    if request.method == "GET":
+        return render_template("products/create.html")
+
+    goods = request.form.get("product-goods")
+    description = request.form.get("product-description")
+    price = request.form.get("product-price")
+    if not goods:
+        raise BadRequest("Please provide product name!")
+
+    product_id = len(PRODUCTS_DATA) + 1
+    new_product = {
+                product_id : {
+                    'goods': goods,
+                    'description': description,
+                    'price': price
+                }
+                }
+    PRODUCTS_DATA.update(new_product)
+    return redirect(url_for("products.product_detail", product_id=product_id))
 
 @products_bp.route('/<int:product_id>', endpoint='product_detail')
 def products_read_view(product_id: int):

@@ -1,0 +1,30 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}
+  Add product
+{% endblock %}
+
+{% block content %}
+
+  <h3>Add new product</h3>
+  <form method="post">
+    
+    <div class="mb-3">
+      <label for="product-goods-id" class="form-label">Goods name</label>
+      <input name="product-goods" type="text" class="form-control" id="product-goods-id">
+      <div id="product-goods-id" class="form-text">Example: iphone xr</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="product-description-id" class="form-label">Description</label>
+      <input name="product-description" type="text" class="form-control" id="product-description-id">
+    </div>
+
+    <div class="mb-3">
+        <label for="product-price-id" class="form-label">Price</label>
+        <input name="product-price" type="number" class="form-control" id="product-price-id">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+{% endblock %}

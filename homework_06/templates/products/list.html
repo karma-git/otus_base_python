@@ -19,7 +19,7 @@
       {% endfor %}
   {% endif %}
   <div style="margin-top: 35px" id="add">
-    <a href="#" class="btn btn-primary" role="button">add new product</a>
+    <a href="{{ url_for('products.product_create') }}" class="btn btn-primary" role="button">add new product</a>
   </div>
 
 {% endblock content %}

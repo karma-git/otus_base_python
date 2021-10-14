@@ -1,14 +1,17 @@
+from os import environ as env
+
 from flask import Flask, render_template
 from flask_migrate import Migrate
 
 from views.products import products_bp
 from models.database import db
+from config import DB_URI
 
 app = Flask(__name__)
 app.register_blueprint(products_bp, url_prefix="/products")
 
 app.config.update(
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///./products.db',
+    SQLALCHEMY_DATABASE_URI=DB_URI,
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
 )
 db.init_app(app)
@@ -28,4 +31,4 @@ def about():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

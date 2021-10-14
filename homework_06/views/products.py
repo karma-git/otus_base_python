@@ -50,11 +50,12 @@ def products_create_view():
 
 @products_bp.route('/<int:product_id>', endpoint='product_detail')
 def products_read_view(product_id: int):
-    product = PRODUCTS_DATA.get(product_id)
+    # product = PRODUCTS_DATA.get(product_id)
+    product = Product.query.filter(Product.id == product_id).first()
     if product is None:
         raise NotFound(f"No product for id {product_id}")
     return render_template("products/detail.html", 
-    product_id=product_id, 
+    product_id=product.id, 
     product=product)
 
 @products_bp.route('/<int:product_id>', endpoint='product_update')

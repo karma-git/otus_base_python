@@ -1,0 +1,25 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}
+  Products list
+{% endblock %}
+
+{% block content %}
+  <h1>Our products:</h1>
+  {% if not products %}
+  <p class="text-danger font-monospace">Unfortunately, our stock is empty right now.</p>
+  {% else %}
+    <ul class="list-group list-group-flush">
+      {% for product in products %}
+        <li class="list-group-item">
+            <a href="{{ url_for('products.product_detail', product_id=product.id) }}">
+                {{ product.goods }}
+            </a> 
+            -> {{ product.price }} RUB</li>
+      {% endfor %}
+  {% endif %}
+  <div style="margin-top: 35px" id="add">
+    <a href="{{ url_for('products.product_create') }}" class="btn btn-primary" role="button">add new product</a>
+  </div>
+
+{% endblock content %}

@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from werkzeug.exceptions import NotFound, BadRequest
 
+from models import Product
+
 products_bp = Blueprint('products', __name__)
 
 PRODUCTS_DATA = {
@@ -20,7 +22,8 @@ PRODUCTS_DATA = {
 
 @products_bp.route('/', endpoint='products_list')
 def products_list_view():
-    return render_template("products/list.html", products=PRODUCTS_DATA)
+    products = Product.query.all()
+    return render_template("products/list.html", products=products)
 
 # CRUD
 @products_bp.route('/create/', methods=('GET', 'POST'), endpoint='product_create')

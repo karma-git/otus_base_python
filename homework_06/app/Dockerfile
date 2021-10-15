@@ -5,12 +5,12 @@ RUN apk add --no-cache \
     py3-pip~=20.3.4 \
     py3-psycopg2~=2.8.6 \
   && apk add --no-cache --virtual .build-deps \
-    build-base \
-    gcc \
-    python3-dev \
-    libffi-dev \
-    musl-dev \
-    make
+    build-base~=0.5 \
+    gcc~=10.3 \
+    python3-dev~=3.9.5 \
+    libffi-dev~=3.3 \
+    musl-dev~=1.2.2 \
+    make~=4.3
 
 COPY ./requirements.txt ./requirements.txt
 

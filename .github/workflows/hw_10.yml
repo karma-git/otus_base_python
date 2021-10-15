@@ -1,0 +1,28 @@
+name: Run tests for homework
+
+on:
+  # push:
+  #   branches:
+  #     - PythonBasic.2021-05
+  pull_request:
+    branches:
+      - PythonBasic.2021-05
+
+jobs:
+  hw-10:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r ./homework_09/shop/requirements.txt
+    - name: Test hw9
+      run: |
+         cd ./homework_09/shop/
+         python manage.py test --verbosity=2

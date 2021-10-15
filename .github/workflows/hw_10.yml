@@ -1,9 +1,9 @@
 name: hw10
 
 on:
-  # push:
-  #   branches:
-  #     - PythonBasic.2021-05
+  push:
+    branches:
+      - PythonBasic.2021-05
   pull_request:
     branches:
       - PythonBasic.2021-05
@@ -26,6 +26,7 @@ jobs:
          cd ./homework_09/shop/
          python manage.py test --verbosity=2
   
+  # https://github.com/marketplace/actions/codecov
   codecov:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -55,7 +56,6 @@ jobs:
         env_vars: OS,PYTHON
         fail_ci_if_error: true
         files: ./homework_09/shop/coverage.xml
-        # files: ./coverage1.xml,./coverage2.xml
         flags: unittests
         name: codecov-umbrella
         path_to_write_report: ./coverage/codecov_report.txt

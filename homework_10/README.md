@@ -5,4 +5,11 @@
 #### Критерии оценки:
 - создан GitHub Action с выполнением тестов
 ---
-manual push
+# Overview
+Логинимся на [codecov](https://about.codecov.io/) с помощью gh аккаунта.
+
+Выбираем интересующий нас репозиторий, копируем токен.
+
+В репозитории gh создаем секрет `CODECOV_TOKEN` со значением с codecov.
+
+Делаем пайплайн на основе [примера](https://github.com/marketplace/actions/codecov).

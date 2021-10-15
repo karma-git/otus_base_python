@@ -13,8 +13,6 @@
 
 #### Codecov
 
-[![codecov](https://codecov.io/gh/karma-git/otus_base_python/branch/PythonBasic.2021-05/graph/badge.svg?token=G6ADPNLRCF)](https://codecov.io/gh/karma-git/otus_base_python)
-
 Логинимся на [codecov](https://about.codecov.io/) с помощью gh аккаунта.
 
 Выбираем интересующий нас репозиторий, копируем токен.
@@ -22,3 +20,11 @@
 В репозитории gh создаем секрет `CODECOV_TOKEN` со значением с codecov.
 
 Делаем пайплайн на основе [примера](https://github.com/marketplace/actions/codecov).
+
+#### Badge
+
+[![codecov](https://codecov.io/gh/karma-git/otus_base_python/branch/PythonBasic.2021-05/graph/badge.svg?token=G6ADPNLRCF)](https://codecov.io/gh/karma-git/otus_base_python)
+
+[Документация](https://docs.codecov.com/docs/status-badges).
+
+При необходимости поменять `target_branch` в ссылке на бэйдж (например у меня актуальная ветка для домашек - `PythonBasic.2021-05`).

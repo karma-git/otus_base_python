@@ -1,0 +1,62 @@
+name: hw10
+
+on:
+  push:
+    branches:
+      - PythonBasic.2021-05
+  pull_request:
+    branches:
+      - PythonBasic.2021-05
+
+jobs:
+  django-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r ./homework_09/shop/requirements.txt
+    - name: Test hw9
+      run: |
+         cd ./homework_09/shop/
+         python manage.py test --verbosity=2
+  
+  # https://github.com/marketplace/actions/codecov
+  codecov:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    env:
+      OS: ${{ matrix.os }}
+      PYTHON: '3.7'
+    steps:
+    - uses: actions/checkout@master
+    - name: Setup Python
+      uses: actions/setup-python@master
+      with:
+        python-version: 3.7
+    - name: Generate coverage report
+      run: |
+        pip install -r ./homework_09/shop/requirements.txt
+        pip install -r ./homework_09/shop/requirements-test.txt
+        cd ./homework_09/shop/
+        pytest --cov=./ --cov-report=xml
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        directory: ./coverage/reports/
+        env_vars: OS,PYTHON
+        fail_ci_if_error: true
+        files: ./homework_09/shop/coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        path_to_write_report: ./coverage/codecov_report.txt
+        verbose: true

@@ -1,6 +1,9 @@
 name: Run tests for homework
 
-on: [push]
+on:
+  push:
+    branches:
+      - PythonBasic.2021-05
 
 jobs:
   homework-tests:

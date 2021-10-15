@@ -13,7 +13,7 @@
 
 #### Codecov
 
-[![codecov](https://codecov.io/gh/karma-git/otus_base_python/branch//PythonBasic.2021-05/graph/badge.svg?token=G6ADPNLRCF)](https://codecov.io/gh/karma-git/otus_base_python)
+[![codecov](https://codecov.io/gh/karma-git/otus_base_python/branch/PythonBasic.2021-05/graph/badge.svg?token=G6ADPNLRCF)](https://codecov.io/gh/karma-git/otus_base_python)
 
 Логинимся на [codecov](https://about.codecov.io/) с помощью gh аккаунта.
 

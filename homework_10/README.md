@@ -5,7 +5,14 @@
 #### Критерии оценки:
 - создан GitHub Action с выполнением тестов
 ---
-# Overview
+### Overview
+
+Добавлен [пайплайн](https://github.com/karma-git/otus_base_python/blob/PythonBasic.2021-05/.github/workflows/hw_10.yml).
+
+Включает две джобы: тесты джанго, и pytest с анализом отчета от `codecov`.
+
+#### Codecov
+
 Логинимся на [codecov](https://about.codecov.io/) с помощью gh аккаунта.
 
 Выбираем интересующий нас репозиторий, копируем токен.

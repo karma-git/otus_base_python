@@ -90,7 +90,7 @@ retag:build:
       docker tag ${IMAGE_DEST}:${CI_COMMIT_SHORT_SHA} ${IMAGE_DEST}:latest
       docker tag ${IMAGE_DEST}:${CI_COMMIT_SHORT_SHA} registry.heroku.com/${HEROKU_APP_NAME}/web
       docker push ${IMAGE_DEST}:${CI_COMMIT_TAG}
-      heroku auth:token
+      heroku auth:token > /dev/null 2>&1
       heroku container:login
       docker push registry.heroku.com/${HEROKU_APP_NAME}/web
   rules:

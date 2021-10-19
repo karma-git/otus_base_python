@@ -1,0 +1,111 @@
+---
+
+variables:
+  IMAGE_DEST: karmawow/fastapi
+  HEROKU_APP_NAME: otus-hw-12
+
+stages:
+  - lint
+  - test
+  - build
+  - deploy
+  - release
+
+# --- MR
+
+pylint:lint:
+  stage: lint
+  image:
+    name: cytopia/pylint
+    entrypoint: ["/bin/sh", "-c"]
+  script:
+    - find . -maxdepth 1 -name '*.py' | xargs pylint
+  allow_failure: true
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+unittest:test:
+  stage: test
+  image: python:latest
+  before_script:
+    - pip install -r requirements-dev.txt
+    - pip install -r requirements-prod.txt
+  script:
+    - pytest test.py -vv
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+intgration:test:
+  stage: test
+  image: python:latest
+  before_script:
+    - pip install -r requirements-prod.txt
+  script:
+    - |
+      uvicorn main:app --host 0.0.0.0 --port 8080 &
+      sleep 3
+      curl http://0.0.0.0:8080/isalive | tac | tac | grep OK
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+.kaniko:template:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  before_script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"https://index.docker.io/v1/\":{\"auth\":\"$(echo -n $DOCKER_USER:$DOCKER_TOKEN | base64)\"}}}" > /kaniko/.docker/config.json
+    - sed -i "s|__CI_COMMIT_AUTHOR__|${CI_COMMIT_AUTHOR}| ; s|__{CI_COMMIT_SHORT_SHA}__|${CI_COMMIT_SHORT_SHA}| ; s|__CI_PIPELINE_ID__|${CI_PIPELINE_ID}|" main.py
+
+docker:build:
+  extends: .kaniko:template
+  script:
+    - /kaniko/executor --no-push --context ${CI_PROJECT_DIR} --dockerfile ${CI_PROJECT_DIR}/Dockerfile --destination ${IMAGE_DEST}:${CI_PIPELINE_ID}
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+# --- merge with master
+publish_image:build:
+  extends: .kaniko:template
+  script:
+    - /kaniko/executor --context ${CI_PROJECT_DIR} --dockerfile ${CI_PROJECT_DIR}/Dockerfile --destination ${IMAGE_DEST}:${CI_COMMIT_SHORT_SHA}
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      changes:
+        - Dockerfile
+        - main.py
+
+# --- tag
+retag:build:
+  stage: build
+  image: karmawow/monorepo-heroku-cli
+  tags:
+    - "common"
+  script:
+    - |
+      docker login -u ${DOCKER_USER} -p ${DOCKER_TOKEN}
+      docker pull ${IMAGE_DEST}:${CI_COMMIT_SHORT_SHA}
+      docker tag ${IMAGE_DEST}:${CI_COMMIT_SHORT_SHA} ${IMAGE_DEST}:${CI_COMMIT_TAG}
+      docker tag ${IMAGE_DEST}:${CI_COMMIT_SHORT_SHA} ${IMAGE_DEST}:latest
+      docker tag ${IMAGE_DEST}:${CI_COMMIT_SHORT_SHA} registry.heroku.com/${HEROKU_APP_NAME}/web
+      docker push ${IMAGE_DEST}:${CI_COMMIT_TAG}
+      heroku auth:token
+      heroku container:login
+      docker push registry.heroku.com/${HEROKU_APP_NAME}/web
+  rules:
+    - if: '$CI_COMMIT_TAG'
+
+release:release:
+  stage: release
+  needs: ["retag:build"]
+  image: karmawow/monorepo-heroku-cli
+  tags:
+    - "common"
+  script:
+    - heroku auth:token > /dev/null 2>&1
+    - heroku container:release -a ${HEROKU_APP_NAME} web
+    - heroku config:set -a ${HEROKU_APP_NAME} CI_TAG=${CI_COMMIT_TAG}
+  rules:
+    - if: '$CI_COMMIT_TAG'
+      when: manual

@@ -23,5 +23,14 @@ Links:
 ```bash
 pip install --editable .
 ```
+---
+Other tools:
+- [viu](https://github.com/atanunq/viu)
+- [asciinema](https://asciinema.org/)
 
 # Usage
+## dump & recreate
+[![asciicast](https://asciinema.org/a/fC3pMVUFPTOY7miHjawN8iAGn.svg)](https://asciinema.org/a/fC3pMVUFPTOY7miHjawN8iAGn)
+!NOTE: unfortunately, asciinema couldn't record viu output.
+## modify single file
+[![asciicast](https://asciinema.org/a/FkgxGAaGo9ME5vyPpdZ86xcIt.svg)](https://asciinema.org/a/FkgxGAaGo9ME5vyPpdZ86xcIt)

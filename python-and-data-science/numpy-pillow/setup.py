@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="image-editor",
-    python_requires='>3.10',
+    python_requires='>=3.10',
     version="1.0",
     py_modules=["img"],
     include_package_data=True,

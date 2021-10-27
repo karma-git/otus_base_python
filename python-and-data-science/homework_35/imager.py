@@ -9,27 +9,24 @@ from loguru import logger
 @click.group()
 @click.version_option()
 def cli():
-    """Naval Fate.
-    This is the docopt example adopted to Click but with some actual
-    commands implemented and not just the empty parsing which really
-    is not all that interesting.
+    """img -- saves pixels array of an image or recreate an image from file with pixels array.
     """
 
 
 @cli.command()
-@click.option("-s", "--source", default='image.png', help="Image file")
-@click.option("-t", "--target", default='dump.txt', help="File with array data")
-def dump(source: str='image.png', target: str='dump.txt') -> np.ndarray:
+@click.argument("source")
+@click.argument("destination")
+def dump(source: str='image.png', destination: str='dump.txt') -> np.ndarray:
     """
-    dump_pixel_array
-    Source file should be image.
-    Target file should be txt
+    The function saves an array of pixels from image into file.
+    Param <source> -> should be a path to an image.
+    Param <destination> should be a path to an array.
     """
     img = Image.open(source)
     logger.debug('source_file_name=<{}>, size=<{}>, mode=<{}>', source, img.size, img.mode)
     data = np.asarray(img)
     logger.debug('type={}, array_shape={}', type(data), data.shape)
-    with open(target, 'w') as f:
+    with open(destination, 'w') as f:
 
         # Any line starting with "#" will be ignored by np.loadtxt
         # Save array shape at the top of the dump file
@@ -51,23 +48,62 @@ def dump(source: str='image.png', target: str='dump.txt') -> np.ndarray:
 
 
 @cli.command()
-@click.option("-s", "--source", default='dump.txt', help="File with array data")
-@click.option("-t", "--target", default='result.png', help="Image file")
-def create(source: str='dump.txt', target: str='result.png') -> None:
+@click.argument("source")
+@click.argument("destination")
+def recreate(source: str='dump.txt', destination: str='result.png') -> None:
     """
-    load_image_from_pixel_array
+    The function loads pixels array from a file and saves it as an image.
+    Param <source> -> should be a path to pixels array.
+    Param <destination> -> should be a path for a new image.
     """
     new_data = np.loadtxt(source, dtype='uint8')
     logger.debug('loaded_data_type=<{}>,shape=<{}>', type(new_data), new_data.shape)
     new_data = new_data.reshape(_read_array_shape_from_header(source='dump.txt'))  
     logger.debug('reshaped_data=<{}>', new_data.shape)
     img = Image.fromarray(new_data)
-    img.save(target)
+    img.save(destination)
+
+
+@cli.command()
+@click.argument("source")
+@click.argument("destination")
+@click.option('-c', '--color',
+              type=click.Choice(['red', 'green', 'blue', None]), help='choose color')
+def single(source: str='image.png', destination: str='result.png', color: str | None = None ) -> None:
+    """
+    The function modifies source image to the chosen channel (RED, GREEN, BLUE):
+    If color param is not specified, all 3 cases will be concatenated.
+    """
+    logger.debug("color=<{}>", color)
+    img = np.array(Image.open(source))
+
+    match color:
+        case "red":
+            img = img.copy()
+            img[:, :, (1, 2)] = 0
+        case "green":
+            img = img.copy()
+            img[:, :, (0, 2)] = 0
+        case "blue":
+            img = img.copy()
+            img[:, :, (0, 1)] = 0
+        case _:
+            img_R = img.copy()
+            img_R[:, :, (1, 2)] = 0
+            img_G = img.copy()
+            img_G[:, :, (0, 2)] = 0
+            img_B = img.copy()
+            img_B[:, :, (0, 1)] = 0
+            img = np.concatenate((img_R, img_G, img_B), axis=1)
+    
+    img = Image.fromarray(img)
+    img.save(destination)
+
 
 def _read_array_shape_from_header(source: str='dump.txt') -> list:
     """
     Service function. 
-    Get file_name with ndarray, read ndarray shape from header and return it as list.
+    Get file_name with ndarray, read ndarray shape from header and return it as python-list.
     """
     with open(source) as f:
         txt = f.readline()

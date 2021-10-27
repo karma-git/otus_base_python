@@ -58,7 +58,7 @@ def recreate(source: str='dump.txt', destination: str='result.png') -> None:
     """
     new_data = np.loadtxt(source, dtype='uint8')
     logger.debug('loaded_data_type=<{}>,shape=<{}>', type(new_data), new_data.shape)
-    new_data = new_data.reshape(_read_array_shape_from_header(source='dump.txt'))  
+    new_data = new_data.reshape(_read_array_shape_from_header(source))  
     logger.debug('reshaped_data=<{}>', new_data.shape)
     img = Image.fromarray(new_data)
     img.save(destination)

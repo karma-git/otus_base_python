@@ -10,7 +10,7 @@
 ---
 ### GitLab Project
 
-[HW11](https://gitlab.com/otus_base_python/homework_11)
+[HW11](https://gitlab.com/exploring-gitlab-ci-cd/homework_11)
 
 #### GitFlow
 
